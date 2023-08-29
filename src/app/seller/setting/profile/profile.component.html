@@ -1,0 +1,36 @@
+<div class="flex flex-col justify-center min-h-full px-6 py-12 lg:px-8">
+  <div class="text-center sm:mx-auto sm:w-full sm:max-w-sm">
+    <h1
+      class="p-4 mt-10 mb-10 leading-9 tracking-tight text-center text-gray-900 border-b-2 border-black"
+    >
+      My profile
+    </h1>
+    <span class="relative inline-block">
+      <img
+        class="w-16 h-16 rounded-full"
+        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        alt=""
+      />
+    </span>
+  </div>
+
+  <div class="mt-10 text-center sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="grid lg:grid-cols-2 sm:grid-cols-1">
+      <p class="mb-10 text-xl">
+        Name: <br />
+        <span>{{ profileData?.name }}</span>
+      </p>
+      <p class="mb-10 text-xl">
+        Email: <span>{{ profileData?.email }}</span>
+      </p>
+      <p class="mb-10 text-xl">
+        Company : <br />
+        <span>{{ profileData?._org.name }}</span>
+      </p>
+      <p class="mb-10 text-xl">
+        Role : <br />
+        <span>{{ profileData?.role }}</span>
+      </p>
+    </div>
+  </div>
+</div>

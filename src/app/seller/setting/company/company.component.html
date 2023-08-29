@@ -1,0 +1,78 @@
+<div class="flex justify-center px-4 mx-auto my-20 bg-white y-5 b sm:px-6">
+  <div class="inline-block" style="width: 700px">
+    <div class="p-5 mb-16 text-center border-b-2 border-black">
+      <h1>Company Info</h1>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgzIeva2PLUfX8OEQeZx6qZ43cQ36wtNCOKA&usqp=CAU"
+        alt=""
+        class="h-60"
+      />
+      <div class="pt-5" *ngIf="!isEdit">
+        <p class="p-2 text-2xl border border-black mb-7 rounded-xl">
+          Name: {{ orgData?.name }}
+        </p>
+        <p class="p-2 text-2xl border border-black mb-7 rounded-xl">
+          Email: {{ orgData?.email }}
+        </p>
+        <button
+          class="w-20 p-2 text-2xl border border-indigo-700 mb-7 rounded-xl"
+          (click)="isEdit = !isEdit"
+        >
+          Edit
+        </button>
+      </div>
+      <div class="pt-5" *ngIf="isEdit">
+        <form class="space-y-6" #companyInfo="ngForm">
+          <div>
+            <label
+              for="name"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Company Name</label
+            >
+            <div class="mt-2">
+              <input
+                id="name"
+                name="companyName"
+                type="text"
+                ngModel=""
+                autocomplete="name"
+                [(ngModel)]="orgData.name"
+                required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Email address</label
+            >
+            <div class="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                [(ngModel)]="orgData.email"
+                required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-20 p-2 text-2xl border border-indigo-700 mb-7 rounded-xl"
+            (click)="editSave(companyInfo.value)"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

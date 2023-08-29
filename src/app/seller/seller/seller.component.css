@@ -1,0 +1,4 @@
+a.active {
+  color: rgb(67 56 202 / var(--tw-text-opacity));
+  border-color: rgb(99 102 241 / var(--tw-border-opacity));
+}

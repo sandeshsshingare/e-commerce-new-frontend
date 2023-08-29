@@ -1,0 +1,454 @@
+<div class="px-4 mt-10 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center" *ngIf="!isAddUser && !updateUserToggle">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
+      <p class="mt-2 text-sm text-gray-700">
+        A list of all the users in your organization including their name, email
+        and role.
+      </p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <button
+        type="button"
+        (click)="isAddUser = !isAddUser"
+        class="block px-3 py-2 text-sm font-semibold text-center text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        Add user
+      </button>
+    </div>
+  </div>
+  <div class="flow-root mt-8" *ngIf="!isAddUser && !updateUserToggle">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+              >
+                Name
+              </th>
+
+              <th
+                scope="col"
+                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
+                Email
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
+                Role
+              </th>
+
+              <!-- <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                <span class="sr-only">Edit3434343</span>
+              </th> -->
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr
+              *ngFor="
+                let user of usersData
+                  | paginate
+                    : {
+                        itemsPerPage: paginationControl.itemsPerPage,
+                        currentPage: paginationControl.page
+                      };
+                let index = index
+              "
+            >
+              <td
+                class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-0"
+              >
+                {{ user.name }}
+              </td>
+
+              <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                {{ user.email }}
+              </td>
+              <td
+                class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"
+                *ngIf="editId !== user._id"
+              >
+                {{ user.role | titlecase }}
+              </td>
+              <td
+                *ngIf="editId === user._id"
+                class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"
+              >
+                <div class="sm:col-span-3">
+                  <!-- <label
+                    for="role"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Role</label
+                  > -->
+                  <div class="mt-2">
+                    <select
+                      id="role"
+                      name="role"
+                      [(ngModel)]="updateRole"
+                      autocomplete="role-name"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                      <option>admin</option>
+                      <option>user</option>
+                    </select>
+                  </div>
+                </div>
+              </td>
+
+              <td
+                class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-0"
+              >
+                <a
+                  (click)="updateToggle(user)"
+                  class="px-10 text-indigo-600 hover:text-indigo-900"
+                  >Edit<span class="sr-only">, Lindsay Walton</span></a
+                >
+                <a
+                  *ngIf="editId !== user._id"
+                  (click)="editRoleToggle(user._id)"
+                  class="px-10 text-indigo-600 hover:text-indigo-900"
+                  >Role<span class="sr-only">, Lindsay Walton</span></a
+                >
+                <a
+                  *ngIf="isRoleEdit && editId === user._id"
+                  (click)="saveUpdatedRole(user._id)"
+                  class="px-10 text-green-600 hover:text-green-900"
+                  >Save<span class="sr-only">, Lindsay Walton</span></a
+                >
+                <a
+                  (click)="deleteUser(user._id)"
+                  class="px-10 text-red-600 hover:text-red-900"
+                  >Delete<span class="sr-only">, Lindsay Walton</span></a
+                >
+              </td>
+            </tr>
+
+            <!-- More people... -->
+          </tbody>
+        </table>
+        <div class="flex justify-between mt-10">
+          <div>
+            <div class="sm:col-span-3">
+              <label
+                for="role"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Limit</label
+              >
+              <div class="mt-2">
+                <select
+                  id="role"
+                  [(ngModel)]="paginationControl.itemsPerPage"
+                  (change)="getAllUsers()"
+                  autocomplete="role-name"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                  <option>25</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div>
+            <pagination-controls
+              (pageChange)="paginationControl.page = $event"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- addUser -->
+  <div
+    *ngIf="isAddUser || updateUserToggle"
+    class="pb-12 mx-auto border-b border-gray-900/10"
+    style="width: 70%"
+  >
+    <h2 class="text-base font-semibold leading-7 text-gray-900">
+      <span *ngIf="isAddUser">Add new user</span>
+      <span *ngIf="updateUserToggle">Update user info</span>
+    </h2>
+    <p class="mt-1 text-sm leading-6 text-gray-600">
+      Use a permanent email address where you can receive mail.
+    </p>
+    <form #addUserForm="ngForm">
+      <div class="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div class="sm:col-span-3">
+          <label
+            for="first-name"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >First name</label
+          >
+          <div class="mt-2">
+            <input
+              type="text"
+              name="first-name"
+              *ngIf="userInfo?.firstName"
+              [(ngModel)]="userInfo.firstName"
+              id="first-name"
+              autocomplete="given-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <input
+              type="text"
+              name="first-name"
+              *ngIf="!userInfo?.firstName"
+              ngModel
+              id="first-name"
+              autocomplete="given-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label
+            for="last-name"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Last name</label
+          >
+          <div class="mt-2">
+            <input
+              type="text"
+              name="last-name"
+              *ngIf="userInfo?.lastName"
+              [(ngModel)]="userInfo.lastName"
+              id="last-name"
+              autocomplete="family-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <input
+              type="text"
+              name="last-name"
+              *ngIf="!userInfo?.lastName"
+              ngModel
+              id="last-name"
+              autocomplete="family-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <label
+            for="email"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Email address</label
+          >
+          <div class="mt-2">
+            <input
+              id="email"
+              name="email"
+              *ngIf="userInfo?.email"
+              [(ngModel)]="userInfo.email"
+              type="email"
+              autocomplete="email"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+
+            <input
+              id="email"
+              name="email"
+              *ngIf="!userInfo?.email"
+              ngModel
+              type="email"
+              autocomplete="email"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-3" *ngIf="isAddUser">
+          <label
+            for="role"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Role</label
+          >
+          <div class="mt-2">
+            <select
+              id="role"
+              name="role"
+              ngModel
+              autocomplete="role-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            >
+              <option>admin</option>
+              <option>user</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <label
+            for="password"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Password</label
+          >
+          <div class="mt-2">
+            <input
+              type="password"
+              name="password"
+              ngModel
+              id="password"
+              autocomplete="password"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-end mt-6 gap-x-6">
+        <button
+          type="button"
+          class="text-sm font-semibold leading-6 text-gray-900"
+          (click)="resetForm(addUserForm)"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          (click)="addUser(addUserForm.value)"
+          class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          <p>
+            <span *ngIf="isAddUser">Add user</span>
+            <span *ngIf="updateUserToggle">Update user</span>
+          </p>
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- addUser end -->
+
+  <!-- edit user info -->
+  <!-- <div
+    *ngIf="isAddUser"
+    class="pb-12 mx-auto border-b border-gray-900/10"
+    style="width: 70%"
+  >
+    <h2 class="text-base font-semibold leading-7 text-gray-900">
+      Add new user
+    </h2>
+    <p class="mt-1 text-sm leading-6 text-gray-600">
+      Use a permanent email address where you can receive mail.
+    </p>
+    <form #updateUser="ngForm">
+      <div class="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div class="sm:col-span-3">
+          <label
+            for="first-name"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >First name</label
+          >
+          <div class="mt-2">
+            <input
+              type="text"
+              name="first-name"
+              ngModel
+              id="first-name"
+              autocomplete="given-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label
+            for="last-name"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Last name</label
+          >
+          <div class="mt-2">
+            <input
+              type="text"
+              name="last-name"
+              ngModel
+              id="last-name"
+              autocomplete="family-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <label
+            for="email"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Email address</label
+          >
+          <div class="mt-2">
+            <input
+              id="email"
+              name="email"
+              ngModel
+              type="email"
+              autocomplete="email"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label
+            for="role"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Role</label
+          >
+          <div class="mt-2">
+            <select
+              id="role"
+              name="role"
+              ngModel
+              autocomplete="role-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            >
+              <option>admin</option>
+              <option>user</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <label
+            for="password"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Password</label
+          >
+          <div class="mt-2">
+            <input
+              type="password"
+              name="password"
+              ngModel
+              id="password"
+              autocomplete="password"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-end mt-6 gap-x-6">
+        <button
+          type="button"
+          class="text-sm font-semibold leading-6 text-gray-900"
+          (click)="resetForm(updateUser)"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          (click)="updateUser(updateUser.value)"
+          class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div> -->
+  <!-- edit user info end -->
+</div>
