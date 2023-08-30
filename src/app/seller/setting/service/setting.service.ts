@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Injectable } from '@angular/core';
 import { environment } from 'environment/environment';
 import { AuthService } from '../../auth/authServices/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,20 +11,18 @@ export class SettingService {
   token1: any;
   headers: any;
   constructor(private _http: HttpClient) {
-    this.getHeader().then((data) => {
-      this.headers = data;
-    });
+    this.headers = this.getHeader();
   }
 
   getHeader() {
-    return new Promise((resolve, reject) => {
-      let token = localStorage.getItem('token');
-      let header = { Authorization: `Bearer ${token}` };
-      resolve(header);
-    });
+    let token = localStorage.getItem('token');
+    let header = { Authorization: `Bearer ${token}` };
+    return header;
   }
 
   sellerGetProfile() {
+    let token = localStorage.getItem('token');
+    this.headers = { Authorization: `Bearer ${token}` };
     return this._http.get(`${environment.API}/auth/self`, {
       headers: this.headers,
     });
@@ -68,6 +67,12 @@ export class SettingService {
   }
   updateUserInfo(data: any, userId: any) {
     return this._http.patch(`${environment.API}/users/${userId}`, data, {
+      headers: this.headers,
+    });
+  }
+
+  changePassword(data: any) {
+    return this._http.post(`${environment.API}/auth/change-password`, data, {
       headers: this.headers,
     });
   }

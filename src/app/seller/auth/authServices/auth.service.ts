@@ -21,7 +21,7 @@ export class AuthService {
     return this._http.post(`${environment.API}/auth/login`, obj);
   }
   token1: any;
-  headerPromise: any;
+
   isLogin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   sellerRegister(data: any) {
@@ -59,11 +59,6 @@ export class AuthService {
           this.isLogin.next(true);
           let obj = { ...data, isAccess: true };
           resolve(obj);
-          this.headerPromise = new Promise((resolve, reject) => {
-            this.token1 = localStorage.getItem('token') || '';
-            let obj = { Authorization: `Bearer ${this.token1}` };
-            resolve(obj);
-          });
         },
         error: (err) => {
           this._router.navigate(['auth/login']);

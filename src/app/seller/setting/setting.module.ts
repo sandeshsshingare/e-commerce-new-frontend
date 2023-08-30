@@ -8,15 +8,24 @@ import { CompanyComponent } from './company/company.component';
 import { FormsModule } from '@angular/forms';
 import { UsersComponent } from './users/users.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [ProfileComponent, CompanyComponent, UsersComponent],
+  declarations: [
+    ProfileComponent,
+    CompanyComponent,
+    UsersComponent,
+    ChangePasswordComponent,
+  ],
   imports: [
     CommonModule,
     SettingRoutingModule,
     AuthModule,
     FormsModule,
     NgxPaginationModule,
+    ToastrModule.forRoot(),
+    // NoopAnimationPlayer,
   ],
 })
 export class SettingModule {}
