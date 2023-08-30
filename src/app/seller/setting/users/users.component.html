@@ -55,7 +55,8 @@
                   | paginate
                     : {
                         itemsPerPage: paginationControl.itemsPerPage,
-                        currentPage: paginationControl.page
+                        currentPage: paginationControl.page,
+                        totalItems: totalResults
                       };
                 let index = index
               "
@@ -158,6 +159,7 @@
           <div>
             <pagination-controls
               (pageChange)="paginationControl.page = $event"
+              (click)="getAllUsers()"
             ></pagination-controls>
           </div>
         </div>

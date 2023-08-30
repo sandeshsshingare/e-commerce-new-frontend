@@ -22,6 +22,7 @@ export class UsersComponent implements OnInit {
     page: 1,
     itemsPerPage: 5,
   };
+  totalResults: any;
   ngOnInit(): void {
     this.getAllUsers();
   }
@@ -34,6 +35,7 @@ export class UsersComponent implements OnInit {
       next: (data: any) => {
         this.usersData = data.results;
         console.log(this.usersData);
+        this.totalResults = data.totalResults;
       },
     });
   }

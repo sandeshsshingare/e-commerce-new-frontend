@@ -76,4 +76,19 @@ export class SettingService {
       headers: this.headers,
     });
   }
+
+  verifyEmail() {
+    return this._http.post(
+      `${environment.API}/auth/send-verification-email`,
+      null,
+      { headers: this.headers }
+    );
+  }
+
+  verify(token: any) {
+    let params: any = { token: token };
+    return this._http.post(`${environment.API}/auth/verify-email`, null, {
+      params: params,
+    });
+  }
 }

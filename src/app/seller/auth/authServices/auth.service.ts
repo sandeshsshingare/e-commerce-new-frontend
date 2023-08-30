@@ -61,7 +61,7 @@ export class AuthService {
           resolve(obj);
         },
         error: (err) => {
-          this._router.navigate(['auth/login']);
+          // this._router.navigate(['auth/login']);
           this.isLogin.next(false);
           let obj: any = { isAccess: false };
           resolve(obj);
@@ -69,4 +69,21 @@ export class AuthService {
       });
     });
   }
+
+  forgotEmailS(email: any) {
+    return this._http.post(`${environment.API}/auth/forgot-password`, {
+      email,
+    });
+  }
+
+  resetPassword(data: any) {
+    let params: any = { token: data.token };
+    return this._http.post(
+      `${environment.API}/auth/reset-password`,
+      data.password,
+      { params: params }
+    );
+  }
+
+  
 }

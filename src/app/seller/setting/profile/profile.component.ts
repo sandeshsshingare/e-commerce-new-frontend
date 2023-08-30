@@ -10,7 +10,7 @@ import { SettingService } from '../service/setting.service';
 export class ProfileComponent implements OnInit {
   constructor(private _setting: SettingService) {}
   profileData: any;
-
+  isVerified: boolean = false;
   ngOnInit(): void {
     this.getProfileDate();
   }
@@ -20,6 +20,17 @@ export class ProfileComponent implements OnInit {
       next: (data) => {
         console.log(data);
         this.profileData = data;
+        this.isVerified = this.profileData?.isEmailVerified;
+      },
+    });
+  }
+  verify() {
+    this._setting.verifyEmail().subscribe({
+      next: (data) => {
+        console.log('verify email sent');
+      },
+      error: (err) => {
+        console.log('email ', err.error.message);
       },
     });
   }
