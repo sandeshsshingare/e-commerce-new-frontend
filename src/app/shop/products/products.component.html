@@ -1,0 +1,110 @@
+<!-- product list -->
+
+<!--
+    This example requires some changes to your config:
+    
+    ```
+    // tailwind.config.js
+    module.exports = {
+      // ...
+      plugins: [
+        // ...
+        require('@tailwindcss/aspect-ratio'),
+      ],
+    }
+    ```
+  -->
+<div class="bg-white">
+  <div class="px-4 py-16 mx-auto max-w-7xl sm:px-6 sm:py-24 lg:px-8">
+    <div>
+      <div
+        class="grid grid-cols-1 mt-6 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8"
+      >
+        <div
+          class="relative group"
+          *ngFor="
+            let product of allProducts
+              | paginate
+                : {
+                    itemsPerPage: allController.limit,
+                    totalItems: totalResults,
+                    currentPage: allController.page
+                  };
+            let index = index
+          "
+        >
+          <div
+            (click)="onProductClick(product._id)"
+            class="w-full overflow-hidden rounded-lg h-96 sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto"
+          >
+            <img
+              [src]="product?.images[0]?.url"
+              alt=""
+              class="object-cover object-center w-full h-96"
+            />
+          </div>
+          <h3 class="mt-4 text-base font-semibold text-gray-900">
+            <a (click)="onProductClick(product._id)">
+              <span class="absolute inset-0"></span>
+              {{ product?.name }}
+            </a>
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">
+            {{ product.price | currency }}
+          </p>
+        </div>
+
+        <!-- More products... -->
+      </div>
+    </div>
+
+    <!-- <div class="mt-6 sm:hidden">
+              <a
+                href="#"
+                class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                Browse all favorites
+                <span aria-hidden="true"> &rarr;</span>
+              </a>
+            </div> -->
+    <!-- pagination start  -->
+    <div class="flex justify-between mt-20">
+      <div>
+        <div class="sm:col-span-3">
+          <label
+            for="role"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Limit</label
+          >
+          <div class="mt-2">
+            <select
+              id="role"
+              [(ngModel)]="allController.limit"
+              (change)="getAllProducts()"
+              autocomplete="role-name"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            >
+              <option>5</option>
+              <option>10</option>
+              <option>15</option>
+              <option>25</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <pagination-controls
+          (pageChange)="allController.page = $event"
+          (click)="getAllProducts()"
+        ></pagination-controls>
+      </div>
+    </div>
+    <!-- pagination end  -->
+  </div>
+</div>
+
+<!-- product list end -->
+
+<!-- add product form  -->
+
+<!-- add product form end -->

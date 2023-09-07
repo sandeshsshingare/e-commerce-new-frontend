@@ -7,6 +7,101 @@
         and role.
       </p>
     </div>
+
+    <div>
+      <input
+        type="text"
+        class="p-1 border-2 border-indigo-700 rounded-md"
+        placeholder="Search here..."
+        #searchVal
+        (keyup)="search(searchVal.value)"
+      />
+    </div>
+    <!-- sort -->
+    <div class="relative inline-block mx-3 text-left">
+      <div
+        (click)="
+          arrow.style.transform =
+            arrow.style.transform == 'rotate(180deg)'
+              ? 'rotate(0deg)'
+              : 'rotate(180deg)'
+        "
+      >
+        <button
+          type="button"
+          (click)="isSort = !isSort"
+          class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          id="menu-button"
+          aria-expanded="true"
+          aria-haspopup="true"
+        >
+          {{ allController.sort | titlecase }}
+          <svg
+            class="w-5 h-5 -mr-1 text-gray-400"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+            #arrow
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!--
+    Dropdown menu, show/hide based on menu state.
+
+    Entering: "transition ease-out duration-100"
+      From: "transform opacity-0 scale-95"
+      To: "transform opacity-100 scale-100"
+    Leaving: "transition ease-in duration-75"
+      From: "transform opacity-100 scale-100"
+      To: "transform opacity-0 scale-95"
+  -->
+      <div
+        *ngIf="isSort"
+        class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="menu-button"
+        tabindex="-1"
+      >
+        <div class="py-1" role="none">
+          <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+          <a
+            (click)="sort('name')"
+            class="block px-4 py-2 text-sm text-gray-700"
+            role="menuitem"
+            tabindex="-1"
+            id="menu-item-0"
+            >Name</a
+          >
+          <a
+            (click)="sort('role')"
+            class="block px-4 py-2 text-sm text-gray-700"
+            role="menuitem"
+            tabindex="-1"
+            id="menu-item-1"
+            >Role</a
+          >
+          <a
+            (click)="sort('email')"
+            class="block px-4 py-2 text-sm text-gray-700"
+            role="menuitem"
+            tabindex="-1"
+            id="menu-item-2"
+            >Email</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- sort -->
+
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
       <button
         type="button"

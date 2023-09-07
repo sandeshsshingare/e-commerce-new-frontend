@@ -43,6 +43,7 @@ export class SettingService {
       `${environment.API}/users?page=${pagination.page}&limit=${pagination.limit}`,
       {
         headers: this.headers,
+        params: { search: pagination.search, sort: pagination.sort },
       }
     );
   }
@@ -89,6 +90,43 @@ export class SettingService {
     let params: any = { token: token };
     return this._http.post(`${environment.API}/auth/verify-email`, null, {
       params: params,
+    });
+  }
+
+  getProducts(data?: any) {
+    return this._http.get(`${environment.API}/products`, {
+      headers: this.headers,
+      params: data,
+    });
+  }
+
+  getOneProudct(data: any) {
+    return this._http.get(`${environment.API}/products/${data}`, {
+      headers: this.headers,
+    });
+  }
+
+  createProduct(data: any) {
+    return this._http.post(`${environment.API}/products`, data, {
+      headers: this.headers,
+    });
+  }
+
+  updateProduct(data: any, id: string) {
+    return this._http.patch(`${environment.API}/products/${id}`, data, {
+      headers: this.headers,
+    });
+  }
+
+  updateProductImage(data: any, id: string) {
+    return this._http.patch(`${environment.API}/products/images/${id}`, data, {
+      headers: this.headers,
+    });
+  }
+
+  deleteProduct(id: string) {
+    return this._http.delete(`${environment.API}/products/${id}`, {
+      headers: this.headers,
     });
   }
 }

@@ -10,6 +10,12 @@ import { UsersComponent } from './users/users.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ProductsComponent } from './products/products.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { SpecificProductComponent } from './specific-product/specific-product.component';
+import { CKEditorModule } from 'ng2-ckeditor';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -17,6 +23,8 @@ import { ToastrModule } from 'ngx-toastr';
     CompanyComponent,
     UsersComponent,
     ChangePasswordComponent,
+    ProductsComponent,
+    SpecificProductComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +33,10 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     NgxPaginationModule,
     ToastrModule.forRoot(),
+    SharedModule,
+    NgxDropzoneModule,
+    CKEditorModule,
+    AngularEditorModule,
     // NoopAnimationPlayer,
   ],
 })

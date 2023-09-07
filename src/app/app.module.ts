@@ -9,6 +9,9 @@ import { SellerComponent } from './seller/seller/seller.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { CKEditorModule } from 'ng2-ckeditor';
+
 import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
@@ -26,6 +29,8 @@ import {
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     SocialLoginModule,
+    AngularEditorModule,
+    CKEditorModule,
   ],
   providers: [
     {

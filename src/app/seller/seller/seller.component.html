@@ -31,6 +31,8 @@
             >Organization</a
           >
           <a
+            routerLink="setting/products"
+            routerLinkActive="active"
             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
             >Products</a
           >
@@ -132,6 +134,13 @@
         <div class="relative ml-3" *ngIf="!isLoginData">
           <a
             routerLinkActive="active"
+            routerLink="/shop"
+            class="inline-flex items-center px-5 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
+            >Customer</a
+          >
+
+          <a
+            routerLinkActive="active"
             routerLink="auth/login"
             class="inline-flex items-center px-5 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
             >Sign in</a
@@ -229,6 +238,8 @@
         >Change password</a
       >
       <a
+        routerLink="setting/products"
+        routerLinkActive="active"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
         >Products</a
       >
@@ -280,6 +291,12 @@
 
     <div class="pt-2 pb-3 space-y-1" *ngIf="!isLoginData && mobileToggle">
       <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
+      <a
+        [routerLinkActive]="'active'"
+        routerLink="/shop"
+        class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+        >Customer</a
+      >
       <a
         [routerLinkActive]="'active'"
         routerLink="auth/login"

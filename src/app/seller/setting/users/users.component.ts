@@ -18,20 +18,26 @@ export class UsersComponent implements OnInit {
   updateUserToggle: boolean = false;
   userId!: string;
   userInfo: any;
+  isSort: boolean = false;
+  sortBy: string = 'Sort';
   paginationControl = {
     page: 1,
     itemsPerPage: 5,
   };
+
+  allController: any = {
+    limit: this.paginationControl.itemsPerPage,
+    page: this.paginationControl.page,
+    search: '',
+    sort: 'sort',
+  };
+
   totalResults: any;
   ngOnInit(): void {
     this.getAllUsers();
   }
   getAllUsers() {
-    let obj = {
-      limit: this.paginationControl.itemsPerPage,
-      page: this.paginationControl.page,
-    };
-    this._setting.allUsers(obj).subscribe({
+    this._setting.allUsers(this.allController).subscribe({
       next: (data: any) => {
         this.usersData = data.results;
         console.log(this.usersData);
@@ -160,5 +166,21 @@ export class UsersComponent implements OnInit {
     });
     this.isRoleEdit = false;
     this.editId = '';
+  }
+
+  search(data: any) {
+    if (data.length >= 3) {
+      console.log(data);
+      this.allController['search'] = data;
+      this.getAllUsers();
+    } else if (data.length === 0) {
+      this.allController.search = '';
+      this.getAllUsers();
+    }
+  }
+  sort(data: string) {
+    this.allController['sort'] = data;
+    this.isSort = !this.isSort;
+    this.getAllUsers();
   }
 }
