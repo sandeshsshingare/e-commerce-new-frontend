@@ -1,4 +1,4 @@
-<div class="max-w-2xl px-4 mx-auto mt-6 border-2 shadow-lg sm:px-6 lg:px-8">
+<div class="max-w-2xl px-4 mx-auto border-2 shadow-lg sm:px-6 lg:px-8">
   <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
   <div class="max-w-xl py-10 mx-auto">
     <!-- Content goes here -->
@@ -6,7 +6,7 @@
     <div class="mx-auto h-36 shrink-0">
       <img
         class="w-auto mx-auto rounded-lg h-28"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg-z5yd8c2ukIWdDLepcCRumTuC4Mlfx7hGA&usqp=CAU"
+        [src]="profileInfo?.picture"
         alt="Your Company"
       />
     </div>
@@ -30,7 +30,7 @@
             <dd
               class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
             >
-              {{ profileData?.name }}
+              {{ profileInfo?.name }}
             </dd>
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -40,45 +40,72 @@
             <dd
               class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
             >
-              {{ profileData?.email }}
-
-              <span
-                *ngIf="!isVerified"
-                class="p-1 border border-black rounded-lg"
-                (click)="verify()"
-                >Verify</span
-              >
-
-              <span
-                *ngIf="isVerified"
-                class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 rounded-md bg-green-50 ring-1 ring-inset ring-green-600/20"
-                >Verified</span
-              >
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">Role</dt>
-            <dd
-              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
-            >
-              {{ profileData?.role }}
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">
-              Organization
-            </dt>
-            <dd
-              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
-            >
-              {{ profileData?._org?.name }}
+              {{ profileInfo?.email }}
             </dd>
           </div>
         </dl>
       </div>
     </div>
 
- 
+    <div class="mt-6">
+      <div class="px-4 sm:px-0">
+        <h3 class="text-base font-semibold leading-7 text-gray-900">
+          Address Information
+        </h3>
+        <p class="max-w-2xl mt-1 text-sm leading-6 text-gray-500">
+          <!-- Personal details about name a. -->
+        </p>
+      </div>
+      <div class="mt-6 border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Street</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ profileInfo?.address[0].street }}
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">
+              Address Line 2
+            </dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ profileInfo?.address[0].addressLine2 }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">City</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ profileInfo?.address[0].city }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">State</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ profileInfo?.address[0].state }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">PIN</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ profileInfo?.address[0].pin }}
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
 
     <!-- data -->
   </div>

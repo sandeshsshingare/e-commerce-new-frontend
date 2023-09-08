@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { ShopComponent } from './shop/shop.component';
 import { SpecificProductComponent } from './specific-product/specific-product.component';
+import { shopAuthGuard } from './guards/shop-auth.guard';
 
 const routes: Routes = [
   {
@@ -21,6 +22,12 @@ const routes: Routes = [
         path: 'auth',
         loadChildren: () =>
           import('./auth/auth.module').then((m) => m.AuthModule),
+      },
+      {
+        path: 'setting',
+        canActivate: [shopAuthGuard],
+        loadChildren: () =>
+          import('./setting/setting.module').then((m) => m.SettingModule),
       },
     ],
   },

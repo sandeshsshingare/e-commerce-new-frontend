@@ -1,10 +1,10 @@
 <div class="space-y-12">
-  <app-notification
-    *ngIf="flag"
-    [title]="notificationTitle"
-    [message]="notificationMessage"
-    (close)="flag = $event"
-  ></app-notification>
+  <div class="absolute">
+    <app-notification
+      [hidden]="!flag"
+      (close)="flag = $event"
+    ></app-notification>
+  </div>
   <div class="grid gap-5 pb-12 border-b lg:grid-cols-4 border-gray-900/10">
     <!-- notification start -->
     <!-- Global notification live region, render this permanently at the end of the document -->

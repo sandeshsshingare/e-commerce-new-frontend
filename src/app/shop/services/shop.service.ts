@@ -14,4 +14,29 @@ export class ShopService {
   getSpecificProduct(id: string) {
     return this._http.get(`${environment.API}/products/${id}`);
   }
+
+  getProfileData() {
+    let token = localStorage.getItem('customerToken');
+    let headers = { Authorization: `Bearer ${token}` };
+    return this._http.get(`${environment.API}/shop/auth/self`, {
+      headers: headers,
+    });
+  }
+
+  isLoginFunction() {
+    return new Promise<boolean>((resolve, reject) => {
+      this.getProfileData().subscribe({
+        next: (data) => {
+          console.log(data);
+          resolve(true);
+        },
+        error: (err) => {
+          reject(false);
+        },
+        complete: () => {
+          resolve(true);
+        },
+      });
+    });
+  }
 }
