@@ -1,0 +1,162 @@
+<div class="max-w-2xl mx-auto space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
+  <div class="divide-y divide-white/5">
+    <div
+      class="grid grid-cols-1 px-4 max-w-7xl gap-x-8 gap-y-10 sm:px-6 md:grid-cols-3 lg:px-8"
+    >
+      <div>
+        <h2 class="text-base font-semibold leading-7 text-black">
+          Personal Information
+        </h2>
+        <p class="mt-1 text-sm leading-6 text-gray-400">
+          Use a permanent address where you can receive mail.
+        </p>
+      </div>
+
+      <form class="md:col-span-2" #updateDetails="ngForm">
+        <div
+          class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6"
+        >
+          <div class="flex items-center col-span-full gap-x-8">
+            <img
+              [src]="this.profileData?.picture"
+              alt=""
+              class="flex-none object-cover w-24 h-24 bg-gray-800 rounded-lg"
+            />
+            <div>
+              <div class="relative inline-block text-left">
+                <div>
+                  <button
+                    (click)="isAvatarChange = !isAvatarChange"
+                    type="button"
+                    class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-black/10 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:bg-white/20"
+                    id="menu-button"
+                    aria-expanded="true"
+                    aria-haspopup="true"
+                  >
+                    Change avatar
+                    <svg
+                      class="w-5 h-5 -mr-1 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <div
+                  *ngIf="isAvatarChange"
+                  class="absolute left-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-36 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                  tabindex="-1"
+                >
+                  <div class="py-1">
+                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+
+                    <label
+                      class="block px-4 py-2 text-sm text-indigo-700 cursor-pointer"
+                      for="update-picture"
+                      >Update
+                      <input
+                        type="file"
+                        class="hidden"
+                        id="update-picture"
+                        (change)="updatePicture($event)"
+                      />
+                    </label>
+                    <a
+                      (click)="deletePicture()"
+                      class="block px-4 py-2 text-sm text-red-700 cursor-pointer"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-1"
+                      >Delete</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <p class="mt-2 text-xs leading-5 text-gray-400">
+                {{ PictureAdded }}
+              </p>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label
+              for="first-name"
+              class="block text-sm font-medium leading-6 text-black"
+              >First name</label
+            >
+            <div class="mt-2">
+              <input
+                type="text"
+                name="first-name"
+                [(ngModel)]="firstName"
+                [value]="firstName"
+                id="first-name"
+                autocomplete="given-name"
+                class="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label
+              for="last-name"
+              class="block text-sm font-medium leading-6 text-black"
+              >Last name</label
+            >
+            <div class="mt-2">
+              <input
+                type="text"
+                name="last-name"
+                [(ngModel)]="lastName"
+                [value]="lastName"
+                id="last-name"
+                autocomplete="family-name"
+                class="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <div class="col-span-full">
+            <label
+              for="email"
+              class="block text-sm font-medium leading-6 text-black"
+              >Email address</label
+            >
+            <div class="mt-2">
+              <input
+                id="email"
+                name="email"
+                [(ngModel)]="email"
+                [value]="profileData?.email"
+                type="email"
+                autocomplete="email"
+                class="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex mt-8">
+          <button
+            type="submit"
+            (click)="saveDetails(updateDetails.value)"
+            class="px-3 py-2 text-sm font-semibold text-white bg-indigo-500 rounded-md shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { Router } from '@angular/router';
+import { ShopSettingService } from '../../setting/services/shop-setting.service';
 
 @Component({
   selector: 'app-registration',
@@ -9,7 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent {
-  constructor(private _auth: AuthService, private _router: Router) {}
+  constructor(
+    private _auth: AuthService,
+    private _router: Router,
+    private _shopSetting: ShopSettingService
+  ) {
+    this._shopSetting.profileData.subscribe((data) => {
+      if (data.isLogin) {
+        // this._router.navigate(['/shop']);
+      }
+    });
+  }
   flag: boolean = false;
   @ViewChild(NotificationComponent) nc!: NotificationComponent;
 
@@ -47,6 +58,9 @@ export class RegistrationComponent {
 
     this._auth.signUp(obj).subscribe({
       next: (data: any) => {
+        // this._shopSetting.emitProfileData();
+        this._shopSetting.profileData.next({ isLogin: true });
+
         console.log(data);
         localStorage.setItem('customerToken', data.token);
       },

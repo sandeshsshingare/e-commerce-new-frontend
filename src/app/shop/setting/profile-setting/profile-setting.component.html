@@ -1,0 +1,222 @@
+<div class="mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
+  <aside
+    class="flex overflow-x-auto border-b border-gray-900/5 lg:block lg:w-64 lg:flex-none lg:border-0 lg:py-2"
+  >
+    <nav class="flex-none px-4 sm:px-6 lg:px-0">
+      <ul
+        role="list"
+        class="flex gap-x-3 gap-y-1 whitespace-nowrap lg:flex-col"
+      >
+        <li>
+          <!-- Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50" -->
+          <a
+            routerLink="general-setting"
+            [routerLinkActive]="'text-indigo-600 bg-gray-100 '"
+            class="flex py-2 pl-2 pr-3 text-sm font-semibold leading-6 text-gray-700 rounded-md hover:text-indigo-600 hover:bg-gray-50 group gap-x-3"
+          >
+            <svg
+              [routerLinkActive]="'text-indigo-600'"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+              class="w-6 h-6 text-gray-400 shrink-0 group-hover:text-indigo-600"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            General
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="change-password"
+            [routerLinkActive]="'text-indigo-500 bg-gray-50'"
+            class="flex py-2 pl-2 pr-3 text-sm font-semibold leading-6 text-gray-700 rounded-md hover:text-indigo-600 hover:bg-gray-50 group gap-x-3"
+          >
+            <svg
+              [routerLinkActive]="'text-indigo-600'"
+              class="w-6 h-6 text-gray-400 shrink-0 group-hover:text-indigo-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33"
+              />
+            </svg>
+            Security
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="address"
+            routerLinkActive="text-gray-500 bg-gray-50"
+            class="flex py-2 pl-2 pr-3 text-sm font-semibold leading-6 text-gray-700 rounded-md hover:text-indigo-600 hover:bg-gray-50 group gap-x-3"
+          >
+            <svg
+              [routerLinkActive]="'text-indigo-600'"
+              class="w-6 h-6 text-gray-400 shrink-0 group-hover:text-indigo-600"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              class="bi bi-geo-alt-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
+              />
+            </svg>
+            Address
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="delete-account"
+            routerLinkActive="text-indigo-600 bg-gray-50"
+            class="flex py-2 pl-2 pr-3 text-sm font-semibold leading-6 text-gray-700 rounded-md hover:text-indigo-600 hover:bg-gray-50 group gap-x-3"
+          >
+            <svg
+              class="w-6 h-6 text-gray-400 shrink-0 group-hover:text-indigo-600"
+              routerLinkActive="text-indigo-600"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              class="bi bi-person-dash"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1Zm0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+              />
+              <path
+                d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"
+              />
+            </svg>
+
+            Delete account
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-2">
+    <div
+      *ngIf="false"
+      class="max-w-2xl mx-auto space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none"
+    >
+      <div>
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
+        <p class="mt-1 text-sm leading-6 text-gray-500">
+          This information will be displayed publicly so be careful what you
+          share.
+        </p>
+
+        <dl
+          class="mt-6 space-y-6 text-sm leading-6 border-t border-gray-200 divide-y divide-gray-100"
+        >
+          <div class="pt-6 sm:flex">
+            <dt class="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+              Full name
+            </dt>
+            <dd class="flex justify-between mt-1 gap-x-6 sm:mt-0 sm:flex-auto">
+              <div class="text-gray-900">Tom Cook</div>
+              <button
+                type="button"
+                class="font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                Update
+              </button>
+            </dd>
+          </div>
+          <div class="pt-6 sm:flex">
+            <dt class="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+              Email address
+            </dt>
+            <dd class="flex justify-between mt-1 gap-x-6 sm:mt-0 sm:flex-auto">
+              <div class="text-gray-900">tom.cook@example.com</div>
+              <button
+                type="button"
+                class="font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                Update
+              </button>
+            </dd>
+          </div>
+          <div class="pt-6 sm:flex">
+            <dt class="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+              Title
+            </dt>
+            <dd class="flex justify-between mt-1 gap-x-6 sm:mt-0 sm:flex-auto">
+              <div class="text-gray-900">Human Resources Manager</div>
+              <button
+                type="button"
+                class="font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                Update
+              </button>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div>
+        <h2 class="text-base font-semibold leading-7 text-gray-900">
+          Bank accounts
+        </h2>
+        <p class="mt-1 text-sm leading-6 text-gray-500">
+          Connect bank accounts to your account.
+        </p>
+
+        <ul
+          role="list"
+          class="mt-6 text-sm leading-6 border-t border-gray-200 divide-y divide-gray-100"
+        >
+          <li class="flex justify-between py-6 gap-x-6">
+            <div class="font-medium text-gray-900">TD Canada Trust</div>
+            <button
+              type="button"
+              class="font-semibold text-indigo-600 hover:text-indigo-500"
+            >
+              Update
+            </button>
+          </li>
+          <li class="flex justify-between py-6 gap-x-6">
+            <div class="font-medium text-gray-900">Royal Bank of Canada</div>
+            <button
+              type="button"
+              class="font-semibold text-indigo-600 hover:text-indigo-500"
+            >
+              Update
+            </button>
+          </li>
+        </ul>
+
+        <div class="flex pt-6 border-t border-gray-100">
+          <button
+            type="button"
+            class="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            <span aria-hidden="true">+</span> Add another bank
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

@@ -113,7 +113,7 @@ export class SpecificProductComponent implements OnInit {
       },
       complete: () => {
         this.getSpecificProduct();
-
+        this.files.length = 0;
         this.isEditImg = !this.isEditImg;
       },
     });

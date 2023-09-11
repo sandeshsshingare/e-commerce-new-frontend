@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShopService } from '../services/shop.service';
-
+import { ShopSettingService } from '../services/shop-setting.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -8,11 +7,12 @@ import { ShopService } from '../services/shop.service';
 })
 export class ProfileComponent implements OnInit {
   profileInfo: any;
-  constructor(private _setting: ShopService) {}
-
-  ngOnInit(): void {
+  constructor(private _setting: ShopSettingService) {
     this.getProfileData();
+    console.log('called');
   }
+
+  ngOnInit(): void {}
 
   getProfileData() {
     this._setting.getProfileData().subscribe({
@@ -22,10 +22,14 @@ export class ProfileComponent implements OnInit {
         let obj = {
           name: this.profileInfo.name,
           picture: this.profileInfo.picture,
+          email: this.profileInfo.email,
+          isLogin: true,
         };
         this._setting.profileData.next(obj);
       },
-      error: () => {},
+      error: (err) => {
+        console.log(err.error.message);
+      },
       complete: () => {},
     });
   }

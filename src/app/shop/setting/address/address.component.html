@@ -1,0 +1,313 @@
+<div class="max-w-2xl px-4 mx-auto border shadow-lg sm:px-6 lg:px-8">
+  <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+  <div class="max-w-3xl mx-auto lg:mb-10">
+    <!-- add address division -->
+    <div class="mt-6">
+      <div class="flex justify-between px-4 sm:px-0">
+        <h3 class="text-base font-semibold leading-7 text-gray-900">
+          Address Information
+        </h3>
+
+        <button
+          type="button"
+          (click)="addAddressToggle()"
+          class="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Add address
+        </button>
+      </div>
+      <div
+        class="mt-6 border-t border-gray-100"
+        *ngFor="let address of allAddress; let index = index"
+      >
+        <div class="flex justify-between py-3">
+          <p class="max-w-2xl mt-1 text-sm leading-6 text-gray-500">
+            Address no. {{ index + 1 }}
+          </p>
+
+          <div>
+            <a
+              (click)="updateToggle(address)"
+              class="px-3 text-indigo-600 hover:text-indigo-900"
+              >Update<span class="sr-only">, Lindsay Walton</span></a
+            >
+            <a
+              (click)="deleteAddress(address._id)"
+              class="px-3 text-red-600 hover:text-red-900"
+              >Delete<span class="sr-only">, Lindsay Walton</span></a
+            >
+          </div>
+        </div>
+        <dl class="divide-y divide-gray-100">
+          <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Street</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.street }}
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">
+              Address Line 2
+            </dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.addressLine2 }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">City</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.city }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">State</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.state }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">PIN</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.pin }}
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="relative z-10"
+  aria-labelledby="slide-over-title"
+  role="dialog"
+  aria-modal="true"
+  *ngIf="isAddAddress || isUpdateAddress"
+>
+  <!-- Background backdrop, show/hide based on slide-over state. -->
+  <div class="fixed inset-0"></div>
+
+  <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div
+        class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none"
+      >
+        <div class="w-screen max-w-md pointer-events-auto">
+          <div class="flex flex-col h-full py-6 overflow-y-scroll bg-white">
+            <div class="px-5 mt-5 sm:px-6">
+              <div class="flex items-start justify-between px-7">
+                <h2
+                  class="text-base font-semibold leading-6 text-gray-900"
+                  id="slide-over-title"
+                >
+                  <span *ngIf="isAddAddress"> Add address</span>
+                  <span *ngIf="isUpdateAddress">Update address</span>
+                </h2>
+                <div class="flex items-center ml-3 h-7">
+                  <button
+                    (click)="
+                      isAddAddress
+                        ? (isAddAddress = false)
+                        : isUpdateAddress
+                        ? (isUpdateAddress = false)
+                        : false
+                    "
+                    type="button"
+                    class="relative text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    <span class="absolute -inset-2.5"></span>
+                    <span class="sr-only">Close panel</span>
+                    <svg
+                      class="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="relative flex-1 px-4 mt-6 sm:px-6">
+              <!-- Your content -->
+              <form
+                #addAddressForm="ngForm"
+                class="flex flex-col h-full overflow-y-scroll bg-white shadow-xl"
+              >
+                <!-- <div class="sm:col-span-3">
+                  <label
+                    for="country"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Country</label
+                  >
+                  <div class="mt-2">
+                    <select
+                      id="country"
+                      name="country"
+                      ngModel
+                      autocomplete="country-name"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                      <option>India</option>
+                      <option>United States</option>
+                      <option>Canada</option>
+                      <option>Mexico</option>
+                    </select>
+                  </div>
+                </div> -->
+
+                <div class="mb-2 px-7 sm:col-span-3">
+                  <label
+                    for="street-address"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Street address</label
+                  >
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="street-address"
+                      [(ngModel)]="updateAddressDetails.street"
+                      id="street-address"
+                      autocomplete="street-address"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-2 sm:col-span-3 px-7">
+                  <label
+                    for="addressLine2"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Address line 2</label
+                  >
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="addressLine2"
+                      [(ngModel)]="updateAddressDetails.addressLine2"
+                      id="addressLine2"
+                      autocomplete="addressLine2"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-2 sm:col-span-2 sm:col-start-1 px-7">
+                  <label
+                    for="city"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >City</label
+                  >
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="city"
+                      [(ngModel)]="updateAddressDetails.city"
+                      id="city"
+                      autocomplete="address-level2"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-2 sm:col-span-2 px-7">
+                  <label
+                    for="region"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >State / Province</label
+                  >
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="state"
+                      [(ngModel)]="updateAddressDetails.state"
+                      id="region"
+                      autocomplete="address-level1"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-5 sm:col-span-2 px-7">
+                  <label
+                    for="postal-code"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >ZIP / Postal code</label
+                  >
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="postal-code"
+                      [(ngModel)]="updateAddressDetails.pin"
+                      id="postal-code"
+                      autocomplete="postal-code"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <!-- Action buttons -->
+                <div
+                  class="flex-shrink-0 px-4 py-5 border-t border-gray-200 sm:px-6"
+                >
+                  <div class="flex justify-end space-x-3">
+                    <button
+                      type="button"
+                      (click)="
+                        isAddAddress
+                          ? (isAddAddress = false)
+                          : isUpdateAddress
+                          ? (isUpdateAddress = false)
+                          : false
+                      "
+                      class="px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      (click)="
+                        isAddAddress
+                          ? addAddress(addAddressForm.value)
+                          : isUpdateAddress
+                          ? updateAddress(
+                              addAddressForm.value,
+                              updateAddressDetails._id
+                            )
+                          : ''
+                      "
+                      class="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      <span *ngIf="isAddAddress"> Create</span>
+                      <span *ngIf="isUpdateAddress">Update</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
