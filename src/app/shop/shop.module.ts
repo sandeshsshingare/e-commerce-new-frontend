@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products/products.component';
 import { shopRoutingModule } from './shop-routing.module';
@@ -7,6 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SpecificProductComponent } from './specific-product/specific-product.component';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './store/app.state';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [ProductsComponent, ShopComponent, SpecificProductComponent],
@@ -16,6 +19,10 @@ import { SpecificProductComponent } from './specific-product/specific-product.co
     HttpClientModule,
     FormsModule,
     NgxPaginationModule,
+    StoreModule.forRoot(appReducer),
+    StoreDevtoolsModule.instrument({
+      logOnly: !isDevMode(),
+    }),
   ],
 })
 export class ShopModule {}

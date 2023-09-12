@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShopService } from '../services/shop.service';
+import { cartReducer } from '../states/cart.reducer';
+import { Store } from '@ngrx/store';
+import { appState } from '../store/app.state';
+import { addProduct } from '../states/cart.action';
 
 @Component({
   selector: 'app-specific-product',
@@ -70,7 +74,8 @@ export class SpecificProductComponent implements OnInit {
 
   constructor(
     private _activeRoute: ActivatedRoute,
-    private _shop: ShopService
+    private _shop: ShopService,
+    private store: Store<appState>
   ) {}
 
   ngOnInit(): void {
@@ -95,5 +100,41 @@ export class SpecificProductComponent implements OnInit {
         console.log('product details get successfully');
       },
     });
+  }
+
+  addToBag() {
+    let cartArray: any[] = [];
+    this.store.select('cart').subscribe({
+      next: (data) => {
+        cartArray = data.cartItems;
+      },
+    });
+    let isAvailable: boolean = false;
+
+    cartArray.forEach((data) => {
+      console.log(data);
+      if (data.cartObj.productId === this.productInfo._id) {
+        isAvailable = true;
+        return;
+      }
+    });
+    if (isAvailable) {
+      return alert('Product is already in cart');
+    }
+    let cartObj = {
+      name: this.productInfo.name,
+      price: this.productInfo.price,
+      productId: this.productInfo._id,
+      qty: 1,
+      subTotal: this.productInfo.price,
+      image: this.productInfo.images[0].url,
+      deal: {
+        price: this.productInfo?.deal?.price,
+        discount: this.productInfo?.deal?.discount,
+        ends: this.productInfo?.deal?.ends,
+      },
+    };
+
+    this.store.dispatch(addProduct({ cartObj: cartObj }));
   }
 }

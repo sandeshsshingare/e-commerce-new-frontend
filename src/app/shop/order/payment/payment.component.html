@@ -1,0 +1,127 @@
+<div class="pt-10 mt-10 border-t border-gray-200">
+  <h2 class="text-lg font-medium text-gray-900">Payment</h2>
+
+  <fieldset class="mt-4">
+    <legend class="sr-only">Payment type</legend>
+    <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
+      <div class="flex items-center">
+        <input
+          id="credit-card"
+          name="payment-type"
+          type="radio"
+          checked
+          class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+        />
+        <label
+          for="credit-card"
+          class="block ml-3 text-sm font-medium text-gray-700"
+          >Credit card</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          id="paypal"
+          name="payment-type"
+          type="radio"
+          class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+        />
+        <label for="paypal" class="block ml-3 text-sm font-medium text-gray-700"
+          >PayPal</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          id="etransfer"
+          name="payment-type"
+          type="radio"
+          class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+        />
+        <label
+          for="etransfer"
+          class="block ml-3 text-sm font-medium text-gray-700"
+          >eTransfer</label
+        >
+      </div>
+    </div>
+  </fieldset>
+
+  <form #paymentForm="ngForm">
+    <div class="grid grid-cols-4 mt-6 gap-x-4 gap-y-6">
+      <div class="col-span-4">
+        <label for="card-number" class="block text-sm font-medium text-gray-700"
+          >Card number</label
+        >
+        <div class="mt-1">
+          <input
+            type="text"
+            name="cardNumber"
+            ngModel
+            id="card-number"
+            autocomplete="card-number"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+      <div class="col-span-4">
+        <label
+          for="name-on-card"
+          class="block text-sm font-medium text-gray-700"
+          >Name on card</label
+        >
+        <div class="mt-1">
+          <input
+            type="text"
+            name="nameOnCard"
+            ngModel
+            id="name-on-card"
+            autocomplete="nameOnCard"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label
+          for="expiration-date"
+          class="block text-sm font-medium text-gray-700"
+          >Expiration date (MM/YY)</label
+        >
+        <div class="mt-1">
+          <input
+            type="text"
+            name="expiry"
+            ngModel
+            id="expiration-date"
+            autocomplete="expiration-date"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="cvc" class="block text-sm font-medium text-gray-700"
+          >CVC</label
+        >
+        <div class="mt-1">
+          <input
+            type="text"
+            name="cvv"
+            ngModel
+            id="cvc"
+            autocomplete="cvc"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+
+      <div class="w-full col-span-4 mt-7">
+        <button
+          (click)="makePayment(paymentForm.value)"
+          class="py-3 text-white bg-yellow-600 hover:bg-yellow-500 w-[100%] rounded-md"
+        >
+          Make payment
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

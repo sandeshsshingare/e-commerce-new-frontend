@@ -1,0 +1,772 @@
+<!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<div>
+  <div>
+    <h2 class="text-lg font-medium text-gray-900">Contact information</h2>
+
+    <div class="mt-4">
+      <label
+        for="email"
+        class="block text-sm font-medium leading-6 text-gray-900"
+        >Email address</label
+      >
+      <div class="mt-2">
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="Enter your email address"
+          [value]="this.profileData?.email"
+          [disabled]="true"
+          required
+          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-10 mt-10 border-t border-gray-200">
+    <h2 class="text-lg font-medium text-gray-900">Shipping information</h2>
+
+    <div class="grid grid-cols-1 mt-4 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+      <div class="mt-4">
+        <label
+          for="email"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >First name</label
+        >
+        <div class="mt-2">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="Enter your email address"
+            [value]="firstName"
+            [disabled]="true"
+            required
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label
+          for="email"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >Last name</label
+        >
+        <div class="mt-2">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="Enter your email address"
+            [value]="lastName"
+            [disabled]="true"
+            required
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <div class="flex justify-between sm:px-0">
+        <h3 class="text-base font-semibold leading-7 text-gray-700">
+          Address Information
+        </h3>
+
+        <button
+          type="button"
+          (click)="isChangeAddress = true"
+          (click)="profileDataFun()"
+          class="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Change address
+        </button>
+      </div>
+
+      <!-- address quickviews -->
+
+      <div
+        class="relative z-10"
+        role="dialog"
+        aria-modal="true"
+        *ngIf="isChangeAddress"
+      >
+        <div
+          class="fixed inset-0 hidden transition-opacity bg-gray-500 bg-opacity-75 md:block"
+        ></div>
+
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div
+            class="flex items-stretch justify-center min-h-full text-center md:items-center md:px-2 lg:px-4"
+          >
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            <span
+              class="hidden md:inline-block md:h-screen md:align-middle"
+              aria-hidden="true"
+              >&#8203;</span
+            >
+
+            <div
+              class="flex w-full text-base text-left transition transform md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl"
+            >
+              <div
+                class="relative items-center w-full px-4 pb-8 overflow-hidden bg-white shadow-2xl pt-14 sm:px-6 sm:pt-8 md:p-6 lg:p-8"
+              >
+                <button
+                  (click)="isChangeAddress = false"
+                  type="button"
+                  class="absolute text-gray-400 right-4 top-4 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+                <fieldset>
+                  <div *ngIf="!isAddNewAddress">
+                    <legend
+                      class="text-base font-semibold leading-6 text-gray-900"
+                    >
+                      Select shipping address
+                    </legend>
+
+                    <div
+                      *ngIf="!isAddNewAddress"
+                      class="grid grid-cols-1 mt-4 gap-y-6 sm:grid-cols-3 sm:gap-x-4"
+                    >
+                      <!-- Active: "border-indigo-600 ring-2 ring-indigo-600", Not Active: "border-gray-300" -->
+                      <label
+                        *ngFor="let adr of addresses"
+                        [ngClass]="{
+                          'border-indigo-600 ring-2 ring-indigo-600':
+                            adr._id === address._id,
+                          'border-gray-300': adr._id !== address._id
+                        }"
+                        (click)="address = adr"
+                        [routerLink]="['/shop/order/checkout']"
+                        [queryParams]="{
+                          addressId: address?._id,
+                          isStandard: deliveryFee
+                        }"
+                        class="relative flex p-4 bg-white border rounded-lg shadow-sm cursor-pointer focus:outline-none"
+                      >
+                        <input
+                          type="radio"
+                          name="project-type"
+                          value="Newsletter"
+                          class="sr-only"
+                          aria-labelledby="project-type-0-label"
+                          aria-describedby="project-type-0-description-0 project-type-0-description-1"
+                        />
+                        <span class="flex flex-1 w-48">
+                          <span class="flex flex-col">
+                            <span
+                              id="project-type-0-label"
+                              class="block text-sm font-medium text-gray-900"
+                              >{{ adr.street }},</span
+                            >
+                            <span
+                              id="project-type-0-label"
+                              class="block text-sm font-medium text-gray-900"
+                              >{{ adr.addressLine2 }},</span
+                            >
+                            <span
+                              id="project-type-0-label"
+                              class="block text-sm font-medium text-gray-900"
+                              >{{ adr.city }},</span
+                            >
+                            <span
+                              id="project-type-0-label"
+                              class="block text-sm font-medium text-gray-900"
+                              >{{ adr.state }},</span
+                            >
+                            <span
+                              id="project-type-0-label"
+                              class="block text-sm font-medium text-gray-900"
+                              >{{ adr.pin }}.</span
+                            >
+                          </span>
+                        </span>
+                        <!-- Not Checked: "invisible" -->
+                        <svg
+                          *ngIf="adr._id === address._id"
+                          class="w-5 h-5 text-indigo-600"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <!--
+        Active: "border", Not Active: "border-2"
+        Checked: "border-indigo-600", Not Checked: "border-transparent"
+      -->
+                        <span
+                          class="absolute border-2 rounded-lg pointer-events-none -inset-px"
+                          aria-hidden="true"
+                        ></span>
+                      </label>
+                      <br />
+                      <!-- Active: "border-indigo-600 ring-2 ring-indigo-600", Not Active: "border-gray-300" -->
+                    </div>
+                    <div class="relative my-8" *ngIf="!isAddNewAddress">
+                      <div
+                        class="absolute inset-0 flex items-center"
+                        aria-hidden="true"
+                      >
+                        <div class="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div class="relative flex justify-center">
+                        <span class="px-2 text-sm text-gray-500 bg-white"
+                          >OR</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="text-center" *ngIf="!isAddNewAddress">
+                      <button
+                        type="button"
+                        (click)="isAddNewAddress = true"
+                        class="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-green-600 rounded-md shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      >
+                        Add new
+                      </button>
+                    </div>
+                  </div>
+
+                  <div *ngIf="isAddNewAddress" class="mt-7">
+                    <!-- add new address -->
+
+                    <div
+                      class="max-w-2xl px-4 mx-auto border shadow-lg sm:px-6 lg:px-8"
+                    >
+                      <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+                      <div class="max-w-3xl mx-auto lg:mb-10">
+                        <div class="px-4 pt-4 mb-5 sm:px-0">
+                          <form #addNewAddressForm="ngForm" class="col-span-2">
+                            <div class="pb-5 border-b border-gray-900/10">
+                              <h2
+                                class="text-base font-semibold leading-3 text-gray-900"
+                              >
+                                Add new address
+                              </h2>
+
+                              <div
+                                class="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6"
+                              >
+                                <div class="sm:col-span-6">
+                                  <!-- <label
+                              for="country"
+                              class="block text-sm font-medium leading-6 text-gray-900"
+                              >Country</label
+                            > 
+                            <div class="mt-2">
+                              <select
+                                id="country"
+                                name="country"
+                                ngModel
+                                autocomplete="country-name"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                              >
+                                <option>India</option>
+                                <option>United States</option>
+                                <option>Canada</option>
+                                <option>Mexico</option>
+                              </select>
+                            </div>
+                          </div> -->
+
+                                  <div class="sm:col-span-3">
+                                    <label
+                                      for="street-address"
+                                      class="block text-sm font-medium leading-6 text-gray-900"
+                                      >Street address</label
+                                    >
+                                    <div class="mt-2">
+                                      <input
+                                        type="text"
+                                        name="street-address"
+                                        ngModel
+                                        id="street-address"
+                                        autocomplete="street-address"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div class="mt-4 sm:col-span-3">
+                                    <label
+                                      for="addressLine2"
+                                      class="block text-sm font-medium leading-6 text-gray-900"
+                                      >Address line 2</label
+                                    >
+                                    <div class="mt-2">
+                                      <input
+                                        type="text"
+                                        name="addressLine2"
+                                        ngModel
+                                        id="addressLine2"
+                                        autocomplete="addressLine2"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="mt-4 sm:col-span-2 sm:col-start-1"
+                                  >
+                                    <label
+                                      for="city"
+                                      class="block text-sm font-medium leading-6 text-gray-900"
+                                      >City</label
+                                    >
+                                    <div class="mt-2">
+                                      <input
+                                        type="text"
+                                        name="city"
+                                        ngModel
+                                        id="city"
+                                        autocomplete="address-level2"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div class="mt-4 sm:col-span-2">
+                                    <label
+                                      for="region"
+                                      class="block text-sm font-medium leading-6 text-gray-900"
+                                      >State / Province</label
+                                    >
+                                    <div class="mt-2">
+                                      <input
+                                        type="text"
+                                        name="state"
+                                        ngModel
+                                        id="region"
+                                        autocomplete="address-level1"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div class="mt-4 sm:col-span-2">
+                                    <label
+                                      for="postal-code"
+                                      class="block text-sm font-medium leading-6 text-gray-900"
+                                      >ZIP / Postal code</label
+                                    >
+                                    <div class="mt-2">
+                                      <input
+                                        type="text"
+                                        name="postal-code"
+                                        ngModel
+                                        id="postal-code"
+                                        autocomplete="postal-code"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="flex items-center justify-end mt-6 gap-x-6"
+                              >
+                                <button
+                                  type="button"
+                                  class="text-sm font-semibold leading-6 text-gray-900"
+                                  (click)="isAddNewAddress = false"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  type="submit"
+                                  (click)="
+                                    addNewAddressFun(addNewAddressForm.value)
+                                  "
+                                  class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                >
+                                  <p>
+                                    <span>Add address</span>
+                                  </p>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="float-right mt-8" *ngIf="!isAddNewAddress">
+                    <button
+                      type="button"
+                      (click)="isChangeAddress = false"
+                      class="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 border-t border-gray-100">
+        <div class="flex justify-between py-3">
+          <!-- <div>
+              <a
+                (click)="updateToggle(address)"
+                class="px-3 text-indigo-600 hover:text-indigo-900"
+                >Update<span class="sr-only">, Lindsay Walton</span></a
+              >
+              <a
+                (click)="deleteAddress(address._id)"
+                class="px-3 text-red-600 hover:text-red-900"
+                >Delete<span class="sr-only">, Lindsay Walton</span></a
+              >
+            </div> -->
+        </div>
+        <dl class="divide-y divide-gray-100">
+          <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Street</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.street }}
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">
+              Address Line 2
+            </dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.addressLine2 }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">City</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.city }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">State</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.state }}
+            </dd>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">PIN</dt>
+            <dd
+              class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
+            >
+              {{ address?.pin }}
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div *ngIf="false">
+        <div class="sm:col-span-2">
+          <label for="address" class="block text-sm font-medium text-gray-700"
+            >Address</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              name="address"
+              id="address"
+              autocomplete="street-address"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="apartment" class="block text-sm font-medium text-gray-700"
+            >Apartment, suite, etc.</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              name="apartment"
+              id="apartment"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="city" class="block text-sm font-medium text-gray-700"
+            >City</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              name="city"
+              id="city"
+              autocomplete="address-level2"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="country" class="block text-sm font-medium text-gray-700"
+            >Country</label
+          >
+          <div class="mt-1">
+            <select
+              id="country"
+              name="country"
+              autocomplete="country-name"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+              <option>United States</option>
+              <option>Canada</option>
+              <option>Mexico</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="region" class="block text-sm font-medium text-gray-700"
+            >State / Province</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              name="region"
+              id="region"
+              autocomplete="address-level1"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="postal-code"
+            class="block text-sm font-medium text-gray-700"
+            >Postal code</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              name="postal-code"
+              id="postal-code"
+              autocomplete="postal-code"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="phone" class="block text-sm font-medium text-gray-700"
+            >Phone</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              name="phone"
+              id="phone"
+              autocomplete="tel"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-10 mt-10 border-t border-gray-200">
+    <fieldset>
+      <legend class="text-lg font-medium text-gray-900">Delivery method</legend>
+
+      <div class="grid grid-cols-1 mt-4 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+        <!--
+            Checked: "border-transparent", Not Checked: "border-gray-300"
+            Active: "ring-2 ring-indigo-500"
+          -->
+        <label
+          (click)="isStandard = true"
+          [routerLink]="['/shop/order/checkout']"
+          [queryParams]="{ isStandard: 40, addressId: address?._id }"
+          [ngClass]="{
+            'border-indigo-600 ring-2 ring-indigo-600': deliveryFee === 40,
+            'border-gray-300': deliveryFee !== 40
+          }"
+          class="relative flex p-4 bg-white border rounded-lg shadow-sm cursor-pointer focus:outline-none"
+        >
+          <input
+            type="radio"
+            name="delivery-method"
+            value="Standard"
+            class="sr-only"
+            aria-labelledby="delivery-method-0-label"
+            aria-describedby="delivery-method-0-description-0 delivery-method-0-description-1"
+          />
+          <span class="flex flex-1">
+            <span class="flex flex-col">
+              <span
+                id="delivery-method-0-label"
+                class="block text-sm font-medium text-gray-900"
+                >Standard</span
+              >
+              <span
+                id="delivery-method-0-description-0"
+                class="flex items-center mt-1 text-sm text-gray-500"
+                >4–10 business days</span
+              >
+              <span
+                id="delivery-method-0-description-1"
+                class="mt-6 text-sm font-medium text-gray-900"
+                >{{ deliveryFee | currency : "INR" }}</span
+              >
+            </span>
+          </span>
+          <!-- Not Checked: "hidden" -->
+          <svg
+            *ngIf="deliveryFee === 40"
+            class="w-5 h-5 text-indigo-600"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <!--
+              Active: "border", Not Active: "border-2"
+              Checked: "border-indigo-500", Not Checked: "border-transparent"
+            -->
+          <span
+            class="absolute border-2 rounded-lg pointer-events-none -inset-px"
+            aria-hidden="true"
+          ></span>
+        </label>
+        <!--
+            Checked: "border-transparent", Not Checked: "border-gray-300"
+            Active: "ring-2 ring-indigo-500"
+          -->
+        <label
+          (click)="isStandard = false"
+          [routerLink]="['/shop/order/checkout']"
+          [queryParams]="{ isStandard: 60, addressId: address?._id }"
+          [ngClass]="{
+            'border-indigo-600 ring-2 ring-indigo-600': deliveryFee !== 40,
+            'border-gray-300': deliveryFee === 40
+          }"
+          class="relative flex p-4 bg-white border rounded-lg shadow-sm cursor-pointer focus:outline-none"
+        >
+          <input
+            type="radio"
+            name="delivery-method"
+            value="Express"
+            class="sr-only"
+            aria-labelledby="delivery-method-1-label"
+            aria-describedby="delivery-method-1-description-0 delivery-method-1-description-1"
+          />
+          <span class="flex flex-1">
+            <span class="flex flex-col">
+              <span
+                id="delivery-method-1-label"
+                class="block text-sm font-medium text-gray-900"
+                >Express</span
+              >
+              <span
+                id="delivery-method-1-description-0"
+                class="flex items-center mt-1 text-sm text-gray-500"
+                >2–5 business days</span
+              >
+              <span
+                *ngIf="deliveryFee === 40"
+                id="delivery-method-1-description-1"
+                class="mt-6 text-sm font-medium text-gray-900"
+                >{{ deliveryFee + 20 | currency : "INR" }}</span
+              >
+              <span
+                *ngIf="deliveryFee === 60"
+                id="delivery-method-1-description-1"
+                class="mt-6 text-sm font-medium text-gray-900"
+                >{{ deliveryFee | currency : "INR" }}</span
+              >
+            </span>
+          </span>
+          <!-- Not Checked: "hidden" -->
+          <svg
+            *ngIf="deliveryFee === 60"
+            class="w-5 h-5 text-indigo-600"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <!--
+              Active: "border", Not Active: "border-2"
+              Checked: "border-indigo-500", Not Checked: "border-transparent"
+            -->
+          <span
+            class="absolute border-2 rounded-lg pointer-events-none -inset-px"
+            aria-hidden="true"
+          ></span>
+        </label>
+      </div>
+    </fieldset>
+  </div>
+
+  <!-- Payment -->
+</div>
