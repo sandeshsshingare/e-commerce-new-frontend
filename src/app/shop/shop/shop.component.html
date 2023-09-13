@@ -68,6 +68,13 @@
             >Products</a
           >
           <a
+            *ngIf="isLogin"
+            routerLink="/shop/order/order-list"
+            routerLinkActive="active"
+            class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
+            >Orders</a
+          >
+          <a
             routerLink="/auth/login"
             routerLinkActive="active"
             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
@@ -229,20 +236,30 @@
     <div class="pt-2 pb-3 space-y-1">
       <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" -->
       <a
+        [routerLink]="'/shop'"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="block py-2 pl-3 pr-4 text-base font-medium text-indigo-700 border-l-4 border-indigo-500 bg-indigo-50"
-        >Dashboard</a
+        >Products</a
       >
       <a
+        *ngIf="isLogin"
+        routerLink="/shop/order/order-list"
+        routerLinkActive="active"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-        >Team</a
+        >Orders</a
       >
       <a
+        routerLink="/auth/login"
+        routerLinkActive="active"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-        >Projects</a
+        >Become a seller</a
       >
       <a
+        routerLink="/shop/cart/cart-items"
+        routerLinkActive="active"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-        >Calendar</a
+        >Cart</a
       >
     </div>
     <div class="pt-4 pb-3 border-t border-gray-200" *ngIf="isLogin">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ShopSettingService } from '../../setting/services/shop-setting.service';
 import { appState } from '../../store/app.state';
@@ -12,13 +12,14 @@ import { OrderService } from '../service/order.service';
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, OnChanges {
   ordersData: any[] = [];
   subTotal: number = 0;
   tax: number = 8.32;
   deliveryFee: number = 40;
   orderTotal: number = 0;
   addresses: any;
+  isPaymentRoute: boolean = false;
   addressId: any;
   constructor(
     private store: Store<appState>,
@@ -28,8 +29,25 @@ export class OrderComponent implements OnInit {
     private _orderService: OrderService
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {}
+
+  isPaymentCheck() {
+    console.log('or route change called');
+    if (this._router.url.toString().includes('payment')) {
+      this.isPaymentRoute = true;
+    } else {
+      this.isPaymentRoute = false;
+    }
+  }
+
   ngOnInit(): void {
     this.getOrders();
+    console.log();
+    if (this._router.url.toString().includes('payment')) {
+      this.isPaymentRoute = true;
+    } else {
+      this.isPaymentRoute = false;
+    }
     this.getAddresses();
     this._activeRoute.queryParamMap.subscribe({
       next: (data: any) => {
@@ -151,7 +169,6 @@ export class OrderComponent implements OnInit {
     this._orderService.placeOrder(obj).subscribe({
       next: (data: any) => {
         console.log(data);
-
         this._router.navigate([`/shop/order/payment/${data.result._id}`]);
       },
     });

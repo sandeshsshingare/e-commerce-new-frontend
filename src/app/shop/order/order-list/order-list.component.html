@@ -1,0 +1,157 @@
+<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+  <div>
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+          <h1 class="text-base font-semibold leading-6 text-gray-900">
+            Orders
+          </h1>
+          <p class="mt-2 text-sm text-gray-700">
+            A list of all the orders you placed until now.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="flow-root mt-8 overflow-hidden">
+      <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <table class="w-full text-left">
+          <thead class="bg-white">
+            <tr>
+              <th
+                scope="col"
+                class="relative isolate py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
+              >
+                Order ID
+                <div
+                  class="absolute inset-y-0 w-screen border-b right-full -z-10 border-b-gray-200"
+                ></div>
+                <div
+                  class="absolute inset-y-0 left-0 w-screen border-b -z-10 border-b-gray-200"
+                ></div>
+              </th>
+              <th
+                scope="col"
+                class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+              >
+                Placed date
+              </th>
+              <th
+                scope="col"
+                class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 md:table-cell"
+              >
+                No. of items
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
+                Payment status
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
+                Delivery status
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              ></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let order of listOfOrders
+                  | paginate
+                    : {
+                        itemsPerPage: paginationController.limit,
+                        totalItems: totalResults,
+                        currentPage: paginationController.page
+                      }
+              "
+              class="cursor-pointer hover:bg-gray-50"
+              [routerLink]="['/shop/order/order-details']"
+              [queryParams]="{ orderId: order?._id }"
+            >
+              <td class="relative py-4 pr-3 text-sm font-medium text-gray-900">
+                {{ order?._id }}
+                <div
+                  class="absolute bottom-0 w-screen h-px bg-gray-100 right-full"
+                ></div>
+                <div
+                  class="absolute bottom-0 left-0 w-screen h-px bg-gray-100"
+                ></div>
+              </td>
+              <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                {{ order?.createdAt | date }}
+              </td>
+              <td class="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
+                {{ order?.items.length }}
+              </td>
+              <td class="px-3 py-4 text-sm text-gray-500">
+                {{ order?.paymentStatus }}
+              </td>
+              <td class="px-3 py-4 text-sm text-gray-500">
+                {{ order?.status }}
+              </td>
+              <td class="relative py-4 pl-3 text-sm font-medium text-right">
+                <!-- <a href="#" class="text-indigo-600 hover:text-indigo-900"
+                  >Edit<span class="sr-only">, Lindsay Walton</span></a
+                > -->
+
+                <svg
+                  class="flex-none w-5 h-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </td>
+            </tr>
+
+            <!-- More people... -->
+          </tbody>
+        </table>
+        <div class="flex justify-between mt-10">
+          <div>
+            <div class="sm:col-span-3">
+              <label
+                for="role"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Limit</label
+              >
+              <div class="mt-2">
+                <select
+                  id="role"
+                  [(ngModel)]="paginationController.limit"
+                  (change)="getListOfOrders()"
+                  autocomplete="role-name"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                  <option>25</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div>
+            <pagination-controls
+              (pageChange)="paginationController.page = $event"
+              (click)="getListOfOrders()"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content goes here -->
+</div>

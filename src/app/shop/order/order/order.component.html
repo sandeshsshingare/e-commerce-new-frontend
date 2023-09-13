@@ -4,7 +4,7 @@
 
     <form class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
       <div>
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="isPaymentCheck()"></router-outlet>
       </div>
 
       <!-- Order summary -->
@@ -120,7 +120,10 @@
             </div>
           </dl>
 
-          <div class="px-4 py-6 border-t border-gray-200 sm:px-6">
+          <div
+            class="px-4 py-6 border-t border-gray-200 sm:px-6"
+            *ngIf="!isPaymentRoute"
+          >
             <button
               type="submit"
               (click)="checkoutForPayment()"

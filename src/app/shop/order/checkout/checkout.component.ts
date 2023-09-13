@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopSettingService } from '../../setting/services/shop-setting.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { flatMap } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',

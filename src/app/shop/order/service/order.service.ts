@@ -32,4 +32,31 @@ export class OrderService {
       { headers: this.headers }
     );
   }
+
+  getOrderList(pagination: any) {
+    this.getHeaders();
+    return this._http.get(
+      `${environment.API}/shop/orders?page=${pagination.page}&limit=${pagination.limit}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+  getSpecificOrder(orderId: string) {
+    this.getHeaders();
+    return this._http.get(`${environment.API}/shop/orders/${orderId}`, {
+      headers: this.headers,
+    });
+  }
+
+  cancelOrder(orderId: string) {
+    this.getHeaders();
+    return this._http.patch(
+      `${environment.API}/shop/orders/cancel/${orderId}`,
+      null,
+      {
+        headers: this.headers,
+      }
+    );
+  }
 }

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderComponent } from './order/order.component';
+import { OrderListComponent } from './order-list/order-list.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,14 @@ const routes: Routes = [
         component: PaymentComponent,
       },
     ],
+  },
+  {
+    path: 'order-list',
+    component: OrderListComponent,
+  },
+  {
+    path: 'order-details',
+    component: OrderDetailsComponent,
   },
 ];
 

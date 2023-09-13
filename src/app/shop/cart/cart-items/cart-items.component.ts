@@ -16,6 +16,7 @@ export class CartItemsComponent implements OnInit {
   orderTotal: number = 0;
   deliveryFee: number = 40;
   tax: number = 8.32;
+  isCartEmpty: boolean = true;
   constructor(
     private store: Store<appState>,
     private _router: Router,
@@ -31,6 +32,7 @@ export class CartItemsComponent implements OnInit {
     this.store.select('cart').subscribe({
       next: (data: any) => {
         this.cartData = data.cartItems;
+        this.isCartEmpty = this.cartData.length === 0 ? true : false;
         console.log(this.cartData);
         this.calculateSubtotal();
       },
@@ -64,17 +66,18 @@ export class CartItemsComponent implements OnInit {
   }
 
   checkout() {
+    console.log('called');
     let isLogin: boolean = false;
-    this._shopSetting.profileData.subscribe({
+    this._shopSetting.profileData?.subscribe({
       next: (data) => {
         isLogin = data.isLogin;
       },
     });
 
     if (isLogin) {
-      this._router.navigateByUrl('/shop/order/checkout');
+      this._router.navigate(['/shop/order/checkout']);
     } else {
-      this._router.navigateByUrl('/shop/auth/sign-in');
+      this._router.navigate(['/shop/auth/sign-in']);
     }
   }
 }
