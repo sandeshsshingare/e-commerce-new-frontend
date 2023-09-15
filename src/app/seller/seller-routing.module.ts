@@ -26,6 +26,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./setting/setting.module').then((m) => m.SettingModule),
       },
+    
     ],
   },
 ];
