@@ -11,12 +11,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CKEditorModule } from 'ng2-ckeditor';
-
 import {
-  GoogleLoginProvider,
-  SocialAuthServiceConfig,
-  SocialLoginModule,
-} from '@abacritt/angularx-social-login';
+  RECAPTCHA_V3_SITE_KEY,
+  ReCaptchaV3Service,
+  RecaptchaV3Module,
+} from 'ng-recaptcha';
 
 @NgModule({
   declarations: [AppComponent, SellerComponent],
@@ -28,27 +27,15 @@ import {
     NgxPaginationModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    SocialLoginModule,
     AngularEditorModule,
     CKEditorModule,
+    RecaptchaV3Module,
   ],
   providers: [
+    ReCaptchaV3Service,
     {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '761165436394-dkn2k78500r3gg5k9qk4fnkdcqugngl7.apps.googleusercontent.com/'
-            ),
-          },
-        ],
-        onError: (err) => {
-          console.error(err);
-        },
-      } as SocialAuthServiceConfig,
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: '6Lcf-CgoAAAAACXm8OMiAI0C6e_OxKZA_0zcIOcl',
     },
   ],
   bootstrap: [AppComponent],

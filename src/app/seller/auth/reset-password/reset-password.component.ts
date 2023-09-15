@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingService } from '../../setting/service/setting.service';
 import { AuthService } from '../authServices/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reset-password',
@@ -35,10 +36,24 @@ export class ResetPasswordComponent implements OnInit {
     this._auth.resetPassword(obj).subscribe({
       next: (data) => {
         // this._toastr.success('Password changed successfully', 'Success');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Password reset successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
       error: (err) => {
         console.log(err.error.message);
         this.errorMsg = err.error.message;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: `${err.error.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
       complete: () => {
         this.errorMsg = undefined;

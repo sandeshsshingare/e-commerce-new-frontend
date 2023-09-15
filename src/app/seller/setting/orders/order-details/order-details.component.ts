@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../order-services/order.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-order-details',
@@ -43,6 +44,13 @@ export class OrderDetailsComponent {
     this._orderService.actionOnOrder(this.orderId, action).subscribe({
       next: (data) => {
         this.getOrderDetails();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: '',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
       error: (err) => {
         alert(err.error.message);

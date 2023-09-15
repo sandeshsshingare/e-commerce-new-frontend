@@ -30,7 +30,7 @@ export class SellerComponent implements OnInit {
     });
   }
   signOut() {
-    localStorage.removeItem('token');
+    localStorage.setItem('token', '123');
     this._auth.isLogin.next(false);
 
     this.router.navigateByUrl('auth/login');

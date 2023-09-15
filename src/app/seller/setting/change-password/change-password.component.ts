@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SettingService } from '../service/setting.service';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-change-password',
@@ -36,12 +37,26 @@ export class ChangePasswordComponent {
         this._toastr.error(err, 'Error');
         console.log(err.error.message);
         this.errorMsg = err.error.message;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: err.error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
       complete: () => {
         this.errorMsg = undefined;
         this._toastr.success('Password changed successfully', 'Success');
         console.log('password changed successfully');
         this.isSuccess = true;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Password changed successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
     });
   }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SettingService } from '../service/setting.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-company',
@@ -36,9 +37,23 @@ export class CompanyComponent {
       },
       error: (err) => {
         console.log(err);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: err.error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
       complete: () => {
         console.log('Updated successfully');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Update successfully ',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
     });
   }

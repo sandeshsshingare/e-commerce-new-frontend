@@ -8,11 +8,12 @@ import { SettingService } from '../service/setting.service';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  constructor(private _setting: SettingService) {}
+  constructor(private _setting: SettingService, private _auth: AuthService) {}
   profileData: any;
   isVerified: boolean = false;
   ngOnInit(): void {
     this.getProfileDate();
+    this._auth.isLogin.next(true);
   }
 
   getProfileDate() {

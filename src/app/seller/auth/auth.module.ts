@@ -10,9 +10,16 @@ import { VerifyEmailComponent } from '../setting/verify-email/verify-email.compo
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
+  GoogleSigninButtonModule,
+  SocialAuthService,
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
+import {
+  RECAPTCHA_V3_SITE_KEY,
+  ReCaptchaV3Service,
+  RecaptchaV3Module,
+} from 'ng-recaptcha';
 @NgModule({
   declarations: [
     RegisterComponent,
@@ -26,7 +33,34 @@ import {
     FormsModule,
     HttpClientModule,
     // SocialLoginModule,
+    GoogleSigninButtonModule,
+    RecaptchaV3Module,
   ],
-  providers: [],
+  providers: [
+    ReCaptchaV3Service,
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: '6Lcf-CgoAAAAACXm8OMiAI0C6e_OxKZA_0zcIOcl',
+    },
+
+    SocialAuthService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '1066431254425-3ptpcapvgee5l02ds1tcr7vjsj8rl43j.apps.googleusercontent.com'
+            ),
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        },
+      } as SocialAuthServiceConfig,
+    },
+  ],
 })
 export class AuthModule {}
