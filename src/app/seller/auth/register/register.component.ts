@@ -25,6 +25,7 @@ export class RegisterComponent {
   }
   registerData(data: any) {
     let obj = { ...data, captcha: this.captcha };
+    console.log(obj);
     this._auth.sellerRegister(obj).subscribe({
       next: (data: any) => {
         localStorage.setItem('token', data.token);

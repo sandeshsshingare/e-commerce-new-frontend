@@ -33,6 +33,7 @@ export class AuthService {
       email: data.email,
       companyName: data.companyName,
       password: data.password,
+      captcha: data.captcha,
     };
     console.log(obj);
     return this._http.post(`${environment.API}/auth/register`, obj);
