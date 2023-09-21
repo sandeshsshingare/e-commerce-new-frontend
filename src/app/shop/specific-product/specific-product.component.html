@@ -17,6 +17,13 @@
   <div
     class="max-w-2xl px-4 py-16 mx-auto sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
   >
+    <div>
+      <app-notification
+        (close)="flag = $event"
+        [hidden]="!flag"
+      ></app-notification>
+    </div>
+
     <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
       <!-- Image gallery -->
       <div class="flex flex-col-reverse">
@@ -31,7 +38,7 @@
           >
             <button
               *ngFor="let image of productImage; let index = index"
-              (mouseover)="currentImage = image.url"
+              (click)="currentImage = image.url"
               id="tabs-1-tab-1"
               class="relative flex items-center justify-center h-24 text-sm font-medium text-gray-900 uppercase bg-white rounded-md cursor-pointer hover:bg-gray-50"
               aria-controls="tabs-1-panel-1"

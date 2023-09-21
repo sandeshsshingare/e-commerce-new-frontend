@@ -20,7 +20,7 @@ export class SellerComponent implements OnInit {
       this.profileData = data;
       // this.isLoginData = data?.isAccess;
       if (!data.isAccess) {
-        this.router.navigate(['auth/login']);
+        // this.router.navigate(['auth/login']);
       }
     });
     this._auth.isLogin.subscribe({

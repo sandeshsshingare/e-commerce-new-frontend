@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class ResetPasswordComponent implements OnInit {
   constructor(private _auth: AuthService, private activeRoute: ActivatedRoute) {
+    
     console.log('Reset password');
   }
   errorMsg: any;

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShopService } from '../services/shop.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { appState } from '../store/app.state';
 import { addProduct } from '../states/cart.action';
+import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 
 @Component({
   selector: 'app-products',
@@ -11,6 +12,8 @@ import { addProduct } from '../states/cart.action';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
+  @ViewChild(NotificationComponent) nc!: NotificationComponent;
+  flag: boolean = false;
   allProducts: any[] = [];
   currentHover: any;
   allController = {
@@ -25,13 +28,15 @@ export class ProductsComponent implements OnInit {
     private _shop: ShopService,
     private _router: Router,
     private store: Store<appState>
-  ) {}
+  ) {
+    this.searchProduct();
+  }
 
   ngOnInit(): void {
     this.getAllProducts();
   }
   getAllProducts() {
-    this._shop.getAllProducts().subscribe({
+    this._shop.getAllProducts(this.allController).subscribe({
       next: (data: any) => {
         this.allProducts = data.results;
         console.log(this.allProducts);
@@ -66,7 +71,13 @@ export class ProductsComponent implements OnInit {
       }
     });
     if (isAvailable) {
-      return alert('Product is already in cart');
+      return this.nc.alert(
+        'Success',
+        'Product added to cart successfully',
+        true,
+        false,
+        true
+      );
     }
     let cartObj = {
       name: productInfo.name,
@@ -81,7 +92,29 @@ export class ProductsComponent implements OnInit {
         ends: productInfo?.deal?.ends,
       },
     };
-
+    console.log(this.nc);
+    this.nc.alert(
+      'Success',
+      'Product added to cart successfully',
+      true,
+      false,
+      true
+    );
+    console.log('add to cart called');
     this.store.dispatch(addProduct({ cartObj: cartObj }));
+  }
+
+  searchProduct() {
+    console.log('search called');
+    this._shop.searchProduct.subscribe((data: string) => {
+      console.log(data.length);
+      if (data.length >= 3) {
+        this.allController['search'] = data;
+        this.getAllProducts();
+      } else if (data.length === 0) {
+        this.allController['search'] = '';
+        this.getAllProducts();
+      }
+    });
   }
 }

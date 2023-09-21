@@ -48,9 +48,11 @@
               <input
                 id="search"
                 name="search"
+                #search
+                (keyup)="searchFunction(search.value)"
                 class="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Search"
-                type="search"
+                placeholder="Search... (min 3 letters)"
+                type="text"
               />
             </div>
           </div>
@@ -83,9 +85,14 @@
           <a
             routerLink="/shop/cart/cart-items"
             routerLinkActive="active"
-            class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
-            >Cart</a
-          >
+            class="relative inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
+            >Cart
+            <span
+              class="absolute items-center px-2 py-1 font-medium text-red-700 rounded-md pytext-xs -right-5 top-2 bg-blue-50 ring-1 ring-inset ring-blue-700/10"
+            >
+              {{ noOfCartItems }}
+            </span>
+          </a>
 
           <a
             *ngIf="!isLogin"
@@ -258,9 +265,14 @@
       <a
         routerLink="/shop/cart/cart-items"
         routerLinkActive="active"
-        class="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-        >Cart</a
-      >
+        class="relative py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+        >Cart
+        <span
+          class="absolute top-0 items-center px-2 py-1 font-medium text-red-700 rounded-md pytext-xs -right-5 bg-blue-50 ring-1 ring-inset ring-blue-700/10"
+        >
+          {{ noOfCartItems }}
+        </span>
+      </a>
     </div>
     <div class="pt-4 pb-3 border-t border-gray-200" *ngIf="isLogin">
       <div class="flex items-center px-4">

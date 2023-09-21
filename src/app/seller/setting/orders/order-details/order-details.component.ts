@@ -12,6 +12,7 @@ export class OrderDetailsComponent {
   orderId: string = '';
   orderDetails: any;
   productInfo: any;
+  isGetInvoice: boolean = false;
   constructor(
     private _activeRoute: ActivatedRoute,
     private router: Router,
@@ -54,6 +55,23 @@ export class OrderDetailsComponent {
       },
       error: (err) => {
         alert(err.error.message);
+      },
+    });
+  }
+
+  getInvoice() {
+    this.isGetInvoice = true;
+    this._orderService.createInvoice(this.orderId).subscribe({
+      next: (data) => {},
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+        setTimeout(() => {
+          window.open('http://localhost:8080/invoice-pdf', '_blank');
+          this.isGetInvoice = false;
+        }, 2000);
       },
     });
   }

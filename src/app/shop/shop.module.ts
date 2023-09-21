@@ -10,6 +10,8 @@ import { SpecificProductComponent } from './specific-product/specific-product.co
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/app.state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NotificationComponent } from '../shared/notification/notification.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [ProductsComponent, ShopComponent, SpecificProductComponent],
@@ -19,6 +21,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpClientModule,
     FormsModule,
     NgxPaginationModule,
+    SharedModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       logOnly: !isDevMode(),

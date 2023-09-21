@@ -1,3 +1,5 @@
+<button class="bg-red-800">Get invoice</button>
+
 <div class="bg-white py-7 sm:py-7">
   <div class="mx-auto max-w-7xl lg:px-8">
     <div class="max-w-2xl mx-auto lg:max-w-4xl">
@@ -5,7 +7,15 @@
         <h2 class="font-bold tracking-tight text-gray-900 text-1xl sm:text-2xl">
           Order details
         </h2>
+        <button
+          (click)="getInvoice()"
+          class="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
+        >
+          <span [hidden]="isGetInvoice">Get Invoice</span>
+          <span [hidden]="!isGetInvoice">Getting Invoice...</span>
+        </button>
       </div>
+
       <!-- <p class="mt-2 text-lg leading-8 text-gray-600">
           Learn how to grow your business with our expert advice.
         </p> -->

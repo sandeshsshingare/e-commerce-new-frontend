@@ -17,6 +17,13 @@
 <div class="bg-white">
   <div class="px-4 py-16 mx-auto max-w-7xl sm:px-6 sm:py-24 lg:px-8">
     <div>
+      <app-notification
+        class="z-50"
+        (close)="flag = $event"
+        [hidden]="!flag"
+      ></app-notification>
+    </div>
+    <div>
       <div
         class="grid grid-cols-1 mt-6 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8"
       >
@@ -35,11 +42,9 @@
           (mouseover)="productHover(product)"
           (mouseleave)="currentHover = {}"
         >
-        
           <div
             class="w-full overflow-hidden rounded-lg h-96 sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto"
           >
-          
             <img
               [src]="product?.images[0]?.url"
               alt=""
@@ -151,5 +156,3 @@
 <!-- product list end -->
 
 <!-- add product form  -->
-
-

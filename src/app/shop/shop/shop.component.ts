@@ -3,6 +3,8 @@ import { ShopSettingService } from '../setting/services/shop-setting.service';
 import { ShopService } from '../services/shop.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Store } from '@ngrx/store';
+import { appState } from '../store/app.state';
 
 @Component({
   selector: 'app-shop',
@@ -15,10 +17,12 @@ export class ShopComponent implements OnInit {
   isLogin: boolean = false;
   profileDataObj: any;
   profileInfo: any;
+  noOfCartItems: number = 0;
   constructor(
     private _shopSetting: ShopSettingService,
     private _shop: ShopService,
-    private _router: Router
+    private _router: Router,
+    private _store: Store<appState>
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +38,13 @@ export class ShopComponent implements OnInit {
       this._shopSetting.profileData.next(obj);
     });
 
+    this._store.select('cart').subscribe({
+      next: (data: any) => {
+        console.log(data.cartItems.length);
+        this.noOfCartItems = data.cartItems.length || 0;
+      },
+    });
+
     this._shopSetting.profileData.subscribe({
       next: (data) => {
         this.profileDataObj = data;
@@ -45,6 +56,10 @@ export class ShopComponent implements OnInit {
       },
       error: (err) => {},
     });
+  }
+
+  searchFunction(data: any) {
+    this._shop.searchProduct.next(data);
   }
 
   signOut() {
@@ -63,7 +78,8 @@ export class ShopComponent implements OnInit {
           'Your request of logout is accepted.',
           'success'
         );
-        localStorage.removeItem('customerToken');
+        localStorage.setItem('customerToken', '123');
+        // localStorage.removeItem('customerToken');
         this._shopSetting.profileData.next({ isLogin: false });
         this._router.navigate(['/shop']);
       }

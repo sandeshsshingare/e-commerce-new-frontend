@@ -79,9 +79,11 @@ export class LoginComponent implements AfterViewInit {
 
   login() {
     // alert(this.email + this.password);
+    console.log(this.captcha);
     let obj = {
       email: this.email,
       password: this.password,
+      captcha: this.captcha,
     };
     console.log(obj);
     this._auth.sellerLogin(obj).subscribe({

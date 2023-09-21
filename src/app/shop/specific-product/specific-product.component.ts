@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShopService } from '../services/shop.service';
 import { cartReducer } from '../states/cart.reducer';
 import { Store } from '@ngrx/store';
 import { appState } from '../store/app.state';
 import { addProduct } from '../states/cart.action';
+import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 
 @Component({
   selector: 'app-specific-product',
@@ -12,6 +13,8 @@ import { addProduct } from '../states/cart.action';
   styleUrls: ['./specific-product.component.css'],
 })
 export class SpecificProductComponent implements OnInit {
+  @ViewChild(NotificationComponent) nc!: NotificationComponent;
+  flag: boolean = false;
   productId: any;
   productInfo: any;
   isFeatures: boolean = false;
@@ -119,7 +122,13 @@ export class SpecificProductComponent implements OnInit {
       }
     });
     if (isAvailable) {
-      return alert('Product is already in cart');
+      return this.nc.alert(
+        'Success',
+        'Product added to cart successfully',
+        true,
+        false,
+        true
+      );
     }
     let cartObj = {
       name: this.productInfo.name,
@@ -134,7 +143,15 @@ export class SpecificProductComponent implements OnInit {
         ends: this.productInfo?.deal?.ends,
       },
     };
-
+    this.nc.alert(
+      'Success',
+      'Product added to cart successfully',
+      true,
+      false,
+      true
+    );
     this.store.dispatch(addProduct({ cartObj: cartObj }));
   }
+
+  
 }

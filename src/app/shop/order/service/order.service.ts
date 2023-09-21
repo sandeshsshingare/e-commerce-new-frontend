@@ -59,4 +59,18 @@ export class OrderService {
       }
     );
   }
+
+  createInvoice(id: string) {
+    return this._http.post(
+      `${environment.API}/shop/orders/invoice-pdf/${id} `,
+      null,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  getInvoice(id?: string) {
+    return this._http.get(`${environment.API}/invoice-pdf`);
+  }
 }

@@ -17,11 +17,7 @@ export class AuthService {
     private _recaptcha: ReCaptchaV3Service
   ) {}
   sellerLogin(data: any) {
-    let obj = {
-      email: data.email,
-      password: data.password,
-    };
-    return this._http.post(`${environment.API}/auth/login`, obj);
+    return this._http.post(`${environment.API}/auth/login`, data);
   }
   token1: any;
 

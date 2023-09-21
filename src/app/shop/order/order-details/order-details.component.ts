@@ -12,6 +12,7 @@ export class OrderDetailsComponent implements OnInit {
   orderId: string = '';
   orderDetails: any;
   productInfo: any;
+  isGetInvoice: boolean = false;
   constructor(
     private _activeRoute: ActivatedRoute,
     private router: Router,
@@ -21,6 +22,7 @@ export class OrderDetailsComponent implements OnInit {
     this.orderId =
       this._activeRoute.snapshot.queryParamMap.get('orderId') || '';
     console.log(this.orderId);
+    // this.createInvoice();
   }
   ngOnInit(): void {
     this.getOrderDetails();
@@ -51,5 +53,22 @@ export class OrderDetailsComponent implements OnInit {
   }
   goToPayment() {
     this.router.navigate(['/shop/order/payment/' + this.orderId]);
+  }
+
+  getInvoice() {
+    this.isGetInvoice = true;
+    this._orderService.createInvoice(this.orderId).subscribe({
+      next: (data) => {},
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+        setTimeout(() => {
+          window.open('http://localhost:8080/invoice-pdf', '_blank');
+          this.isGetInvoice = false;
+        }, 2000);
+      },
+    });
   }
 }
