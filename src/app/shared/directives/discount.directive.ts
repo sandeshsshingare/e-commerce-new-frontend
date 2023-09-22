@@ -3,13 +3,14 @@ import {
   Directive,
   ElementRef,
   Input,
+  OnInit,
   Renderer2,
 } from '@angular/core';
 
 @Directive({
   selector: '[appDiscount]',
 })
-export class DiscountDirective implements AfterViewInit {
+export class DiscountDirective implements OnInit {
   endTime: any;
   currentTime: any;
   discountTime: any;
@@ -17,7 +18,7 @@ export class DiscountDirective implements AfterViewInit {
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     setTimeout(() => {
       this.endTime = new Date(this.dealEnds).getTime();
       this.change();
@@ -25,6 +26,9 @@ export class DiscountDirective implements AfterViewInit {
   }
 
   x = setInterval(() => {
+    // console.log(this.dealEnds);
+    this.endTime = new Date(this.dealEnds).getTime();
+    this.discountTime = '';
     this.change();
   }, 1000);
 

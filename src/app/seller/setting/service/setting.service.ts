@@ -130,5 +130,18 @@ export class SettingService {
     });
   }
 
- 
+  addDeal(id: any, data: any) {
+    return this._http.post(`${environment.API}/products/add-deal/${id}`, data, {
+      headers: this.headers,
+    });
+  }
+
+  removeDeal(deal_id: any) {
+    return this._http.delete(
+      `${environment.API}/products/remove-deal?dealId=${deal_id}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
 }

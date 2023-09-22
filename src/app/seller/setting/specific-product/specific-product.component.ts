@@ -14,6 +14,10 @@ export class SpecificProductComponent implements OnInit {
   productInfo: any;
   currentImg: any;
   productImgs: any[] = [];
+  isOnDealDiv: boolean = false;
+  discount: any;
+  isAddDeal: boolean = false;
+  ends: any;
   files: any = [];
   deleteImages: any[] = [];
   isEditImg: boolean = false;
@@ -39,6 +43,7 @@ export class SpecificProductComponent implements OnInit {
     minWidth: '0',
     translate: 'yes',
     enableToolbar: true,
+
     showToolbar: true,
     placeholder: 'Enter text here...',
     defaultParagraphSeparator: '',
@@ -70,6 +75,7 @@ export class SpecificProductComponent implements OnInit {
   getSpecificProduct() {
     this._setting.getOneProudct(this.productId).subscribe((data: any) => {
       this.productInfo = data.data;
+
       console.log(this.productInfo);
       this.currentImg = this.productInfo.images[0].url;
       this.productImgs = this.productInfo.images;
@@ -172,6 +178,41 @@ export class SpecificProductComponent implements OnInit {
       complete: () => {
         this.getSpecificProduct();
         this.isUpdateProduct = !this.isUpdateProduct;
+      },
+    });
+  }
+
+  addDeal() {
+    let ends = this.ends.toString();
+    this._setting
+      .addDeal(this.productId, {
+        discount: this.discount,
+        ends: ends,
+      })
+      .subscribe({
+        next: (data: any) => {
+          this.productInfo = data.results;
+          console.log(this.productInfo);
+        },
+        error: (err) => {
+          alert(err.error.message);
+        },
+        complete: () => {
+          // this.getSpecificProduct();
+          this.isAddDeal = false;
+        },
+      });
+  }
+
+  removeDeal(deal_id: any) {
+    console.log('called');
+    this._setting.removeDeal(deal_id).subscribe({
+      next: (data) => {},
+      error: (err) => {
+        alert(err.error.message);
+      },
+      complete: () => {
+        this.getSpecificProduct();
       },
     });
   }
