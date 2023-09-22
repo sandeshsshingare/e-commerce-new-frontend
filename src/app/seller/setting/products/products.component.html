@@ -62,10 +62,9 @@
 -->
       <div class="bg-white" *ngIf="!isAddProduct">
         <div class="px-4 py-16 mx-auto max-w-7xl sm:px-6 sm:py-24 lg:px-8">
-          
           <div>
             <div
-              class="grid grid-cols-1 mt-6 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8"
+              class="grid grid-cols-1 mt-6 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8"
             >
               <div
                 class="relative group"
@@ -80,6 +79,18 @@
                   let index = index
                 "
               >
+                <div
+                  *ngIf="product?.deal"
+                  class="absolute top-0 right-0 p-2 text-2xl text-white bg-green-600 border rounded-md"
+                >
+                  <p>
+                    <span appDiscount [dealEnds]="product.deal.ends"></span>
+                    <span class="px-3 text-black">
+                      {{ product.deal.discount }}%off
+                    </span>
+                  </p>
+                </div>
+
                 <div
                   (click)="onProductClick(product._id)"
                   class="w-full overflow-hidden rounded-lg h-96 sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto"
@@ -96,8 +107,13 @@
                     {{ product?.name }}
                   </a>
                 </h3>
-                <p class="mt-1 text-sm text-gray-500">
-                  {{ product.price | currency }}
+                <p class="mt-1 text-xl text-gray-500">
+                  <span *ngIf="product.deal" class="text-xl">
+                    {{ product.dealPrice | currency }}
+                  </span>
+                  <span [ngClass]="{ 'line-through text-sm': product.deal }">
+                    {{ product.price | currency }}
+                  </span>
                 </p>
               </div>
 

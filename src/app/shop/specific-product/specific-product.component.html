@@ -75,7 +75,20 @@
             aria-labelledby="tabs-1-tab-1"
             role="tabpanel"
             tabindex="0"
+            class="relative"
           >
+            <div
+              *ngIf="productInfo?.deal"
+              class="absolute top-0 right-0 p-2 text-2xl text-white bg-green-600 border rounded-md"
+            >
+              <p>
+                <span appDiscount [dealEnds]="productInfo.deal.ends"></span>
+                <span class="px-3 text-black">
+                  {{ productInfo.deal.discount }}%off
+                </span>
+              </p>
+            </div>
+
             <img
               [src]="currentImage"
               alt="Angled front view with bag zipped and handles upright."

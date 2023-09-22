@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllProducts();
+    // this.getAllProducts();
   }
   getAllProducts() {
     this._shop.getAllProducts(this.allController).subscribe({
@@ -81,10 +81,11 @@ export class ProductsComponent implements OnInit {
     }
     let cartObj = {
       name: productInfo.name,
-      price: productInfo.price,
+      originalPrice: productInfo.deal ? productInfo.price : undefined,
+      price: productInfo.deal ? productInfo.dealPrice : productInfo.price,
       productId: productInfo._id,
       qty: 1,
-      subTotal: productInfo.price,
+      subTotal: productInfo.deal ? productInfo.dealPrice : productInfo.price,
       image: productInfo.images[0].url,
       deal: {
         price: productInfo?.deal?.price,

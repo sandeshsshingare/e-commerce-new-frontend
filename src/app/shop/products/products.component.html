@@ -43,7 +43,18 @@
           (mouseleave)="currentHover = {}"
         >
           <div
-            class="w-full overflow-hidden rounded-lg h-96 sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto"
+            *ngIf="product?.deal"
+            class="absolute top-0 right-0 p-1 text-2xl text-white bg-green-600 border rounded-md"
+          >
+            <p>
+              <span appDiscount [dealEnds]="product.deal.ends"></span>
+              <span class="px-3 text-black">
+                {{ product.deal.discount }}%off
+              </span>
+            </p>
+          </div>
+          <div
+            class="w-full overflow-hidden rounded-lg h-96 sm:aspect-h-3 sm:aspect-w-2 sm:h-auto"
           >
             <img
               [src]="product?.images[0]?.url"

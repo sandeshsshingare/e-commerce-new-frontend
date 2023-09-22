@@ -132,10 +132,15 @@ export class SpecificProductComponent implements OnInit {
     }
     let cartObj = {
       name: this.productInfo.name,
-      price: this.productInfo.price,
+      originalPrice: this.productInfo.deal ? this.productInfo.price : undefined,
+      price: this.productInfo.deal
+        ? this.productInfo.dealPrice
+        : this.productInfo.price,
       productId: this.productInfo._id,
       qty: 1,
-      subTotal: this.productInfo.price,
+      subTotal: this.productInfo.deal
+        ? this.productInfo.dealPrice
+        : this.productInfo.price,
       image: this.productInfo.images[0].url,
       deal: {
         price: this.productInfo?.deal?.price,
@@ -152,6 +157,4 @@ export class SpecificProductComponent implements OnInit {
     );
     this.store.dispatch(addProduct({ cartObj: cartObj }));
   }
-
-  
 }

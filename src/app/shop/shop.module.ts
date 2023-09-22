@@ -12,6 +12,7 @@ import { appReducer } from './store/app.state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NotificationComponent } from '../shared/notification/notification.component';
 import { SharedModule } from '../shared/shared.module';
+import { DiscountDirective } from '../shared/directives/discount.directive';
 
 @NgModule({
   declarations: [ProductsComponent, ShopComponent, SpecificProductComponent],
@@ -21,6 +22,7 @@ import { SharedModule } from '../shared/shared.module';
     HttpClientModule,
     FormsModule,
     NgxPaginationModule,
+
     SharedModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({

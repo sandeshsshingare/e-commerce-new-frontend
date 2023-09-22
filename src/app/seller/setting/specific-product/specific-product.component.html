@@ -74,12 +74,25 @@
             aria-labelledby="tabs-1-tab-1"
             role="tabpanel"
             tabindex="0"
+            class="relative"
           >
             <img
               [src]="currentImg"
               alt="Angled front view with bag zipped and handles upright."
               class="object-cover object-center w-full h-full sm:rounded-lg"
             />
+
+            <div
+              *ngIf="productInfo?.deal"
+              class="absolute top-0 right-0 p-2 text-2xl text-white bg-green-600 border rounded-md"
+            >
+              <p>
+                <span appDiscount [dealEnds]="productInfo.deal.ends"></span>
+                <span class="px-3 text-black">
+                  {{ productInfo.deal.discount }}%off
+                </span>
+              </p>
+            </div>
           </div>
 
           <!-- More images... -->
@@ -231,7 +244,12 @@
           <div class="mt-3">
             <h2 class="sr-only">Product information</h2>
             <p class="text-3xl tracking-tight text-gray-900">
-              {{ productInfo?.price | currency }}
+              <span *ngIf="productInfo.deal" class="">
+                {{ productInfo.dealPrice | currency }}
+              </span>
+              <span [ngClass]="{ 'line-through text-xl': productInfo.deal }">
+                {{ productInfo.price | currency }}
+              </span>
             </p>
           </div>
 

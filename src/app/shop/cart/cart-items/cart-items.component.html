@@ -46,8 +46,16 @@
                     Large
                   </p>
                 </div> -->
-                <p class="mt-1 text-sm font-medium text-gray-900">
-                  {{ items.cartObj?.price | currency : "INR" }}
+                <p class="mt-1 font-medium text-gray-900">
+                  <span class="text-xl">
+                    {{ items.cartObj?.price | currency : "INR" }}
+                  </span>
+                  <span
+                    *ngIf="items.cartObj.originalPrice"
+                    class="text-sm line-through"
+                  >
+                    {{ items.cartObj.originalPrice | currency }}
+                  </span>
                 </p>
               </div>
 
