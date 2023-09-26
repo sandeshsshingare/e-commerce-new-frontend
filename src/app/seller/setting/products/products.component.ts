@@ -69,6 +69,7 @@ export class ProductsComponent implements OnInit {
       description: data.about,
       price: data.price,
       images: formData,
+      category: data.category,
     };
 
     formData.append('name', obj.name);

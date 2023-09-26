@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShopSettingService } from '../../setting/services/shop-setting.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import Swal from 'sweetalert2';
@@ -18,14 +18,22 @@ export class LoginComponent implements OnInit {
   loggedIn: any;
   captcha: any;
   profileInfo: any;
-
+  productId: any;
+  isRating: boolean = false;
+  isCheckout: boolean = false;
   constructor(
     private _auth: AuthService,
     private _router: Router,
     private _shopSetting: ShopSettingService,
+    private _activeRoute: ActivatedRoute,
     private authService: SocialAuthService
   ) {
-    this._auth.getRecapthca().subscribe((data) => {
+    this.isRating = this._activeRoute.snapshot.queryParams['rating'];
+    this.productId = this._activeRoute.snapshot.queryParams['productId'];
+    this.isCheckout = this._activeRoute.snapshot.queryParams['isCheckout'];
+    console.log('is rating', this.isRating);
+
+    this._auth.getRecaptcha().subscribe((data) => {
       this.captcha = data;
       console.log('this is captcha', this.captcha);
     });
@@ -99,7 +107,18 @@ export class LoginComponent implements OnInit {
         // this._shopSetting.emitProfileData();
 
         localStorage.setItem('customerToken', data.token);
-        this._router.navigate(['/shop/setting/profile']);
+
+        if (this.isRating) {
+          this._router.navigate(['/shop/setting/profile'], {
+            queryParams: { rating: true, productId: this.productId },
+          });
+        } else if (this.isCheckout) {
+          this._router.navigate(['/shop/setting/profile'], {
+            queryParams: { isCheckout: true },
+          });
+        } else {
+          this._router.navigate(['/shop/setting/profile']);
+        }
       },
       error: (err) => {
         this.nc.alert('Error', err.error.message, true, true);

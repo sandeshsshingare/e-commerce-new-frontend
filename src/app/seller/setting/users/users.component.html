@@ -11,14 +11,14 @@
     <div>
       <input
         type="text"
-        class="p-1 border-2 border-indigo-700 rounded-md"
+        class="p-1 mx-3 my-3 border-2 border-indigo-700 rounded-md"
         placeholder="Search here..."
         #searchVal
         (keyup)="search(searchVal.value)"
       />
     </div>
     <!-- sort -->
-    <div class="relative inline-block mx-3 text-left">
+    <div class="relative mx-3 text-left lg:inline-block">
       <div
         (click)="
           arrow.style.transform =

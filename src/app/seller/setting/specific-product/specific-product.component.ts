@@ -167,6 +167,7 @@ export class SpecificProductComponent implements OnInit {
       name: data.name,
       description: data.about,
       price: data.price,
+      category: data.category,
     };
     this._setting.updateProduct(obj, this.productId).subscribe({
       next: (data: any) => {
@@ -200,12 +201,18 @@ export class SpecificProductComponent implements OnInit {
         complete: () => {
           // this.getSpecificProduct();
           this.isAddDeal = false;
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Deal added successfully',
+            showConfirmButton: false,
+            timer: 1500,
+          });
         },
       });
   }
 
   removeDeal(deal_id: any) {
-    console.log('called');
     this._setting.removeDeal(deal_id).subscribe({
       next: (data) => {},
       error: (err) => {

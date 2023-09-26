@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopSettingService } from '../services/shop-setting.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -7,9 +8,22 @@ import { ShopSettingService } from '../services/shop-setting.service';
 })
 export class ProfileComponent implements OnInit {
   profileInfo: any;
-  constructor(private _setting: ShopSettingService) {
+  constructor(
+    private _setting: ShopSettingService,
+    private _activeRoute: ActivatedRoute,
+    private _router: Router
+  ) {
     this.getProfileData();
-    console.log('called');
+    let isRating = this._activeRoute.snapshot.queryParams['rating'];
+    let productId = this._activeRoute.snapshot.queryParams['productId'];
+    let isCheckout = this._activeRoute.snapshot.queryParams['isCheckout'];
+    if (isCheckout) {
+      this._router.navigate(['/shop/order/checkout']);
+    }
+    if (isRating) {
+      this._router.navigate(['/shop/product/' + productId]);
+    }
+    console.log('is rating', isRating);
   }
 
   ngOnInit(): void {}

@@ -129,6 +129,7 @@ export class OrderComponent implements OnInit, OnChanges {
 
   checkoutForPayment() {
     let address: any;
+    console.log(this.addressId);
     this.addresses.forEach((ele: any) => {
       if (ele._id === this.addressId) {
         let obj = {

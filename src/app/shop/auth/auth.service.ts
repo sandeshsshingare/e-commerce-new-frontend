@@ -24,7 +24,7 @@ export class AuthService {
     return this._http.post(`${environment.API}/shop/auth/login/google`, data);
   }
 
-  getRecapthca() {
+  getRecaptcha() {
     return this._recaptcha.execute('login');
   }
 }

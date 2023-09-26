@@ -18,6 +18,14 @@ export class ShopService {
     return this._http.get(`${environment.API}/products/${id}`);
   }
 
+  addReview(id: string, data: any) {
+    let token = localStorage.getItem('customerToken');
+    let headers = { Authorization: `Bearer ${token}` };
+    return this._http.post(`${environment.API}/products/${id}`, data, {
+      headers: headers,
+    });
+  }
+
   getProfileData() {
     let token = localStorage.getItem('customerToken');
     let headers = { Authorization: `Bearer ${token}` };

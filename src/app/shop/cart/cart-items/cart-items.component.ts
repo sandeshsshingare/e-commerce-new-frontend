@@ -77,7 +77,9 @@ export class CartItemsComponent implements OnInit {
     if (isLogin) {
       this._router.navigate(['/shop/order/checkout']);
     } else {
-      this._router.navigate(['/shop/auth/sign-in']);
+      this._router.navigate(['/shop/auth/sign-in'], {
+        queryParams: { isCheckout: true },
+      });
     }
   }
 }
