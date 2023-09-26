@@ -41,7 +41,9 @@ export class OrderDetailsComponent implements OnInit {
     });
   }
   itemClicked(productId: any) {
-    this.router.navigate([`/shop/product/${productId}`]);
+    this.router.navigate([`/shop/product/${productId}`], {
+      queryParams: { writeReview: true },
+    });
   }
 
   cancelOrder() {

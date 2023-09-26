@@ -34,6 +34,7 @@ export class ShopComponent implements OnInit {
         picture: this.profileInfo.picture,
         email: this.profileInfo.email,
         isLogin: true,
+        _id: this.profileInfo._id,
       };
       this._shopSetting.profileData.next(obj);
     });

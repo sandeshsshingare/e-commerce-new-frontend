@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
           picture: this.profileInfo.picture,
           email: this.profileInfo.email,
           isLogin: true,
+          _id: this.profileInfo._id,
         };
         this._setting.profileData.next(obj);
       },

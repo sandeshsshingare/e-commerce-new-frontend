@@ -30,6 +30,7 @@ export class GeneralSettingComponent implements OnInit {
           picture: this.profileData.picture,
           email: this.profileData.email,
           isLogin: true,
+          _id: this.profileData._id,
         };
         this._shopSetting.profileData.next(obj);
       },

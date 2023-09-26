@@ -20,12 +20,14 @@ export class SpecificProductComponent implements OnInit {
   productId: any;
   productInfo: any;
   isFeatures: boolean = false;
+  customerId!: string;
   reviewContent: any;
   reviewStar: number = 0;
   pointsArray: any[] = [];
   reviewAvg: number = 0;
   expandIndex: number = -1;
   isWriteReviews: boolean = false;
+  isReviewButton: boolean = false;
   currentImage!: String;
   productImage: any[] = [];
   ratingForm!: FormGroup;
@@ -109,11 +111,15 @@ export class SpecificProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isReviewButton =
+      Boolean(this._activeRoute.snapshot.queryParamMap.get('writeReview')) ||
+      false;
     this.productId = this._activeRoute.snapshot.params['productId'];
     console.log(this.productId);
     this._shopSetting.profileData.subscribe({
       next: (data) => {
         console.log(data);
+        this.customerId = data._id;
         this.customerData = data;
       },
     });

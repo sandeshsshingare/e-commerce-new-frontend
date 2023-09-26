@@ -38,6 +38,7 @@ export class ShopSettingService {
           picture: profileInfo.picture,
           email: profileInfo.email,
           isLogin: true,
+          _id: profileInfo._id,
         };
         this.profileData.next(obj);
       },
