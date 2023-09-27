@@ -144,4 +144,10 @@ export class SettingService {
       }
     );
   }
+
+  getCategoryDetails() {
+    return this._http.get(`${environment.API}/products/get-category-details`, {
+      headers: this.headers,
+    });
+  }
 }

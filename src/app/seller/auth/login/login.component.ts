@@ -24,7 +24,7 @@ export class LoginComponent implements AfterViewInit {
     this._auth.isLogin.subscribe({
       next: (data) => {
         if (data) {
-          this._router.navigate(['setting/profile']);
+          this._router.navigate(['setting/dashboard']);
         }
       },
     });
@@ -55,7 +55,7 @@ export class LoginComponent implements AfterViewInit {
           return this._auth.isLogin.next(false);
         }
         localStorage.setItem('token', data.token);
-        this._router.navigateByUrl('setting/profile');
+        this._router.navigateByUrl('setting/dashboard');
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -92,7 +92,7 @@ export class LoginComponent implements AfterViewInit {
 
         localStorage.setItem('token', data.token);
         this._auth.isLogin.next(true);
-        this._router.navigateByUrl('setting/profile');
+        this._router.navigateByUrl('setting/dashboard');
         Swal.fire({
           position: 'top-end',
           icon: 'success',

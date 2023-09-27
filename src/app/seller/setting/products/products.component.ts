@@ -58,7 +58,7 @@ export class ProductsComponent implements OnInit {
 
   addProduct(data: any) {
     let formData = new FormData();
-
+    console.log(data.category);
     console.log(this.files);
     for (let i = 0; i < this.files.length; i++) {
       formData.append('images', this.files[i]);
@@ -75,6 +75,7 @@ export class ProductsComponent implements OnInit {
     formData.append('name', obj.name);
     formData.append('description', obj.description);
     formData.append('price', obj.price);
+    formData.append('category', obj.category);
 
     this._setting.createProduct(formData).subscribe({
       next: (data) => {

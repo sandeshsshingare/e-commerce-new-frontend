@@ -1,0 +1,28 @@
+<div class="container mx-auto mt-10 sm:px-6 lg:px-8">
+  <!-- Content goes here -->
+
+  <div *ngIf="isShow" class="mb-24">
+    <p class="mb-5">Product Sale Stat</p>
+    <ngx-charts-pie-chart
+      [results]="productData"
+      [legend]="true"
+      [legendTitle]="'Product Sale Report'"
+      [view]="[1000, 300]"
+      [labels]="true"
+    >
+    </ngx-charts-pie-chart>
+
+    <p class="mt-10">Order Stat</p>
+
+    <ngx-charts-bar-vertical
+      [results]="orderData"
+      [legend]="true"
+      [view]="[900, 300]"
+      [legendTitle]="'Orders Report'"
+      [xAxisLabel]="'hello'"
+      [yAxis]="true"
+      [yAxisLabel]="'hii'"
+      [xAxis]="true"
+    ></ngx-charts-bar-vertical>
+  </div>
+</div>

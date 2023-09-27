@@ -12,7 +12,7 @@
         <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
           <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
           <a
-            [routerLink]="'setting/profile'"
+            [routerLink]="'setting/dashboard'"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
@@ -98,6 +98,7 @@
           >
             <a
               routerLinkActive="active"
+              (click)="profileToggle = false"
               routerLink="setting/profile"
               class="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
@@ -108,6 +109,7 @@
             <a
               routerLink="setting/change-password"
               routerLinkActive="active"
+              (click)="profileToggle = false"
               class="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
               tabindex="-1"
@@ -118,6 +120,7 @@
             <a
               routerLinkActive="active"
               (click)="signOut()"
+              (click)="profileToggle = false"
               class="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
               tabindex="-1"
@@ -207,14 +210,16 @@
     <div class="pt-2 pb-3 space-y-1" *ngIf="isLoginData && mobileToggle">
       <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
       <a
-        [routerLink]="'setting/profile'"
+        [routerLink]="'setting/dashboard'"
         routerLinkActive="active"
+        (click)="mobileToggle = false"
         [routerLinkActiveOptions]="{ exact: true }"
         class="block py-2 pl-3 pr-4 text-base font-medium text-indigo-700 border-l-4 border-indigo-500 bg-indigo-50"
         >Dashboard</a
       >
       <a
         routerLink="setting/users"
+        (click)="mobileToggle = false"
         routerLinkActive="active"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
         >Users</a
@@ -223,23 +228,27 @@
       <a
         routerLink="setting/organization"
         routerLinkActive="active"
+        (click)="mobileToggle = false"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
         >Organization</a
       >
       <a
         routerLink="setting/change-password"
         routerLinkActive="active"
+        (click)="mobileToggle = false"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
         >Change password</a
       >
       <a
         routerLink="setting/products"
+        (click)="mobileToggle = false"
         routerLinkActive="active"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
         >Products</a
       >
       <a
         routerLink="/setting/orders/order-list"
+        (click)="mobileToggle = false"
         class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
         >Orders</a
       >
@@ -268,6 +277,7 @@
       <div class="mt-3 space-y-1">
         <a
           routerLink="setting/profile"
+          (click)="mobileToggle = false"
           routerLinkActive="active"
           class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
           >Your Profile</a
@@ -275,6 +285,7 @@
 
         <a
           routerLinkActive="active"
+          (click)="mobileToggle = false"
           (click)="signOut()"
           class="block px-4 py-2 text-base font-medium text-gray-500 cursor-pointer hover:bg-gray-100 hover:text-gray-800"
           >Sign out</a

@@ -18,7 +18,7 @@ export class RegisterComponent {
     this._auth.isLogin.subscribe({
       next: (data) => {
         if (data) {
-          this._router.navigate(['setting/profile']);
+          this._router.navigate(['setting/dashboard']);
         }
       },
     });

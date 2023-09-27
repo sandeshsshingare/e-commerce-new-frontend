@@ -7,11 +7,16 @@ import { UsersComponent } from './users/users.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProductsComponent } from './products/products.component';
 import { SpecificProductComponent } from './specific-product/specific-product.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: 'organization',
     component: CompanyComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
   },
   {
     path: 'profile',

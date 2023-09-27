@@ -16,6 +16,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SpecificProductComponent } from './specific-product/specific-product.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -25,10 +27,13 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     ChangePasswordComponent,
     ProductsComponent,
     SpecificProductComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
     SettingRoutingModule,
+
+    NgxChartsModule,
     AuthModule,
     FormsModule,
     NgxPaginationModule,
